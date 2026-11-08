@@ -8,3 +8,7 @@ Pillow
 #FOR CLOUDFLARE
 django-storages
 boto3
+
+#FOR NEONDATABASE
+dj_database_url
+psycopg[binary]
