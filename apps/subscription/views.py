@@ -8,5 +8,5 @@ class SubscriptionListCreateAPIView(generics.ListCreateAPIView):
 
     def get_permissions(self):
         if self.request.method == "GET":
-            return [permissions.AllowAny]
-        return [permissions.IsAdminUser]
+            return [permissions.AllowAny()]
+        return [permissions.IsAdminUser()]

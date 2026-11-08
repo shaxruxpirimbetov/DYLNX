@@ -1,3 +1,5 @@
+from django.views import View
+from django.shortcuts import render
 from django.contrib.auth import get_user_model
 from rest_framework import generics, permissions, parsers
 from rest_framework.response import Response
@@ -35,3 +37,7 @@ class MeAPIView(APIView):
         if self.request.user.is_authenticated and self.request.user.is_superuser:
             return Response(UserSerializer(request.user).data, status=200)
         return Response(ResponseUserSerializer(request.user).data, status=200)
+
+class IndexView(APIView):
+    def get(self, request):
+        return render(request, 'index.html')
