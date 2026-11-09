@@ -43,7 +43,7 @@ class TeamAPIView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 
     def get_queryset(self):
-        return User.objects.filter(role=User.role.EMPLOYEE)
+        return User.objects.filter(role="EMPLOYEE")
 
 class IndexView(APIView):
     def get(self, request):
