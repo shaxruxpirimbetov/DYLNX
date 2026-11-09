@@ -38,6 +38,13 @@ class MeAPIView(APIView):
             return Response(UserSerializer(request.user).data, status=200)
         return Response(ResponseUserSerializer(request.user).data, status=200)
 
+class TeamAPIView(generics.ListAPIView):
+    serializer_class = ResponseUserSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def get_queryset(self):
+        return User.objects.filter(role=User.role.EMPLOYEE)
+
 class IndexView(APIView):
     def get(self, request):
         return render(request, 'index.html')
