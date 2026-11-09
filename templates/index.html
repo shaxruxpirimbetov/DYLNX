@@ -8,7 +8,7 @@
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta name="color-scheme" content="dark">
     <meta name="theme-color" content="#0b0907">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' https: data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; connect-src https://dylnx-indol.vercel.app; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' https: data: blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; connect-src https://dylnx-indol.vercel.app; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'">
     <meta property="og:title" content="DYLNX">
     <meta property="og:description" content="Quiet backends. Fast when it counts.">
     <meta property="og:type" content="website">
@@ -56,6 +56,7 @@
         }
         body.boot-lock{overflow:hidden;height:100vh}
         img{max-width:100%;display:block}
+        [hidden]{display:none!important}
         a{color:inherit;text-decoration:none}
         button,input,textarea{font:inherit;color:inherit}
         :focus-visible{outline:2px solid var(--eye);outline-offset:3px;border-radius:2px}
@@ -386,7 +387,6 @@
         .state h3{margin:0 0 10px;font-size:1.2rem}
         .state p{color:var(--ash);font-size:.95rem;max-width:40ch;margin:0 auto 20px}
         .work-more{display:flex;justify-content:center;margin-top:clamp(28px,4vw,44px)}
-        .work-more[hidden]{display:none}
 
         /* ══════════════════════════ modal ══════════════════════════ */
         .modal{position:fixed;inset:0;z-index:90;display:grid;place-items:center;padding:clamp(14px,3vw,40px);opacity:0;visibility:hidden;transition:opacity var(--t-med),visibility var(--t-med)}
@@ -456,26 +456,118 @@
         .toast i{width:9px;height:9px;border-radius:52% 48% 46% 54%/48% 52% 48% 52%;background:var(--ember);flex-shrink:0;margin-top:7px}
         .toast.bad i{background:#c9502a}
 
-        /* ══════════════════════════ console ══════════════════════════ */
-        #opsPanel{position:fixed;inset:0;z-index:97;display:none;place-items:center;padding:clamp(14px,3vw,40px)}
-        #opsPanel.on{display:grid}
-        #opsPanel .veil{position:absolute;inset:0;background:rgba(5,4,3,.92);backdrop-filter:blur(6px)}
-        #opsPanel .box{position:relative;width:min(860px,100%);max-height:88svh;overflow:auto;background:var(--hide);border:1px solid var(--line);border-radius:4px 28px 4px 28px;padding:clamp(22px,3.4vw,38px)}
-        #opsPanel h2{font-size:1.5rem;margin:0 0 4px;padding-right:46px}
-        #opsPanel .sub-t{font-size:.84rem;color:var(--ash-dim);margin-bottom:24px}
-        .tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 22px;border-bottom:1px solid var(--line-2);padding-bottom:14px}
-        .tabs button{background:none;border:1px solid var(--line-2);padding:9px 17px;border-radius:40% 60% 52% 48%/50% 46% 54% 50%;font-size:.86rem;color:var(--ash);cursor:pointer;transition:background var(--t-fast),color var(--t-fast),border-color var(--t-fast)}
-        .tabs button[aria-pressed="true"]{background:var(--rust);color:var(--bone);border-color:transparent}
-        .pane{display:none}
-        .pane.on{display:block}
-        .rows{display:flex;flex-direction:column;gap:1px;background:var(--line-2);border:1px solid var(--line-2);margin-top:14px}
-        .row{background:var(--pelt);padding:14px 16px;display:flex;justify-content:space-between;gap:14px;align-items:flex-start;font-size:.9rem}
-        .row small{display:block;color:var(--ash-dim);font-size:.78rem;margin-top:4px}
-        .row button{background:none;border:1px solid rgba(201,80,42,.4);color:#d9794f;padding:6px 13px;border-radius:40% 60% 52% 48%/50% 46% 54% 50%;font-size:.78rem;cursor:pointer;flex-shrink:0}
-        .row button:hover{background:rgba(201,80,42,.16)}
-        .kv{display:grid;grid-template-columns:auto 1fr;gap:9px 20px;font-size:.92rem;margin-top:12px}
-        .kv dt{color:var(--ash-dim);font-size:.82rem;letter-spacing:.08em}
-        .kv dd{margin:0}
+        /* ══════════════════════════ admin panel ══════════════════════════ */
+        #admin{position:fixed;inset:0;z-index:97;display:none;grid-template-columns:238px minmax(0,1fr);background:#0a0806}
+        #admin.on{display:grid}
+        #admin.anon .ad-side,#admin.anon .ad-main{display:none}
+        #admin.anon .ad-login{display:grid}
+        .ad-login{position:absolute;inset:0;z-index:3;display:none;place-items:center;padding:24px;background:#0a0806}
+        .ad-login .card{width:min(420px,100%);background:var(--hide);border:1px solid var(--line);border-radius:4px 30px 4px 30px;padding:clamp(26px,4vw,38px)}
+        .ad-login svg{width:34px;height:34px;overflow:visible;margin-bottom:18px}
+        .ad-login h2{font-size:1.45rem;margin:0 0 6px}
+        .ad-login .hint{font-size:.85rem;color:var(--ash-dim);margin:0 0 24px}
+
+        .ad-side{display:flex;flex-direction:column;gap:4px;padding:22px 16px;border-right:1px solid var(--line-2);background:#0d0a08;overflow:auto}
+        .ad-brand{display:flex;align-items:center;gap:11px;padding:0 8px 18px;border-bottom:1px solid var(--line-2);margin-bottom:16px}
+        .ad-brand svg{width:27px;height:27px;overflow:visible;flex-shrink:0}
+        .ad-brand b{display:block;font-family:var(--f-display);letter-spacing:.18em;font-size:.95rem}
+        .ad-brand i{display:block;font-style:normal;font-size:.66rem;letter-spacing:.22em;color:var(--ash-dim);margin-top:3px}
+        .ad-nav{display:flex;flex-direction:column;gap:3px;flex:1}
+        .ad-nav button{display:flex;align-items:center;justify-content:space-between;gap:10px;background:none;border:0;padding:11px 14px;border-radius:3px 15px 3px 15px;color:var(--ash);font-size:.92rem;cursor:pointer;text-align:left;transition:background var(--t-fast),color var(--t-fast)}
+        .ad-nav button:hover{background:rgba(122,51,18,.22);color:var(--bone)}
+        .ad-nav button[aria-current="true"]{background:var(--rust);color:var(--bone)}
+        .ad-nav em{font-style:normal;font-size:.74rem;color:var(--ash-dim);background:rgba(242,183,101,.07);padding:2px 9px;border-radius:20px}
+        .ad-nav button[aria-current="true"] em{color:var(--tuft);background:rgba(0,0,0,.28)}
+        .ad-foot{border-top:1px solid var(--line-2);padding-top:14px;margin-top:14px}
+        .ad-who{padding:0 8px 11px;font-size:.82rem;color:var(--ash-dim);overflow-wrap:anywhere}
+
+        .ad-main{display:flex;flex-direction:column;overflow:hidden}
+        .ad-top{display:flex;align-items:center;gap:12px;padding:16px 26px;border-bottom:1px solid var(--line-2);flex-wrap:wrap}
+        .ad-top h2{font-size:1.28rem;margin:0;margin-right:auto}
+        .ad-body{flex:1;overflow:auto;padding:26px;overscroll-behavior:contain}
+
+        .ab{background:none;border:1px solid var(--line-2);color:var(--ash);padding:9px 15px;border-radius:32% 68% 60% 40%/52% 44% 56% 48%;font-size:.82rem;cursor:pointer;white-space:nowrap;transition:background var(--t-fast),border-color var(--t-fast),color var(--t-fast)}
+        .ab:hover{border-color:var(--ember);color:var(--bone);background:rgba(122,51,18,.22)}
+        .ab.pri{background:linear-gradient(142deg,var(--tuft),var(--ember) 60%,var(--rust));color:#17100a;border-color:transparent;font-weight:600}
+        .ab.pri:hover{filter:brightness(1.08)}
+        .ab.dang{border-color:rgba(201,80,42,.45);color:#dc7d55}
+        .ab.dang:hover{background:rgba(201,80,42,.18);border-color:#c9502a;color:#f0916a}
+        .ab[disabled]{opacity:.42;cursor:not-allowed;filter:grayscale(.4)}
+        .field input[type=file]{padding:10px 12px;font-size:.86rem;color:var(--ash)}
+        .field input[type=file]::file-selector-button{background:rgba(122,51,18,.3);border:1px solid var(--line-2);color:var(--tuft);padding:8px 14px;margin-right:12px;border-radius:30% 70% 60% 40%/52% 44% 56% 48%;font:inherit;font-size:.82rem;cursor:pointer}
+        .field input[type=file]::file-selector-button:hover{background:var(--rust);color:var(--bone)}
+        .field select{background:rgba(21,17,13,.9);border:1px solid var(--line-2);border-radius:2px 14px 2px 14px;padding:14px 16px;font-size:.98rem;width:100%;font-family:var(--f-body);color:var(--bone)}
+        .field select:focus{outline:none;border-color:var(--ember)}
+        .ad-search{background:rgba(21,17,13,.9);border:1px solid var(--line-2);border-radius:2px 14px 2px 14px;padding:9px 14px;font-size:.88rem;min-width:190px;flex:0 1 240px}
+        .ad-search:focus{outline:none;border-color:var(--ember)}
+
+        .ad-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:13px;margin-bottom:30px}
+        .ad-tile{background:var(--hide);border:1px solid var(--line-2);border-radius:3px 20px 3px 20px;padding:19px;text-align:left;cursor:pointer;transition:border-color var(--t-fast),transform var(--t-fast)}
+        .ad-tile:hover{border-color:rgba(242,183,101,.26);transform:translateY(-2px)}
+        .ad-tile b{display:block;font-family:var(--f-display);font-size:2rem;line-height:1;color:var(--tuft);letter-spacing:-.02em}
+        .ad-tile span{display:block;margin-top:8px;font-size:.8rem;color:var(--ash-dim)}
+
+        .ad-h{font-family:var(--f-display);font-size:.78rem;letter-spacing:.18em;color:var(--ash-dim);margin:0 0 12px}
+        .ad-list{display:flex;flex-direction:column;gap:10px}
+        .ad-item{display:flex;align-items:center;gap:14px;background:var(--hide);border:1px solid var(--line-2);border-radius:2px 17px 2px 17px;padding:14px 16px;transition:border-color var(--t-fast)}
+        .ad-item:hover{border-color:rgba(242,183,101,.18)}
+        .ad-item .th{width:44px;height:44px;border-radius:50%;object-fit:cover;background:var(--pelt);border:1px solid var(--line-2);flex-shrink:0}
+        .ad-item .grow{flex:1;min-width:0}
+        .ad-item h4{margin:0 0 5px;font-family:var(--f-display);font-size:1rem;font-weight:600;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+        .ad-item p{margin:0;font-size:.85rem;color:var(--ash);overflow-wrap:anywhere;white-space:pre-line}
+        .ad-item .when{font-size:.73rem;color:var(--ash-dim);letter-spacing:.07em;white-space:nowrap}
+        .ad-acts{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+        .ad-item.unread{border-left:2px solid var(--ember)}
+
+        .tag{display:inline-block;font-size:.69rem;letter-spacing:.1em;padding:3px 9px;border-radius:20px;border:1px solid var(--line-2);color:var(--ash-dim);font-family:var(--f-body);font-weight:400}
+        .tag.live{color:#93cf7c;border-color:rgba(147,207,124,.32)}
+        .tag.off{color:#b8866a;border-color:rgba(184,134,106,.32)}
+        .tag.key{color:var(--tuft);border-color:rgba(242,183,101,.32)}
+
+        .ad-empty{padding:clamp(34px,6vw,64px) 20px;text-align:center;border:1px dashed var(--line-2);border-radius:3px 24px 3px 24px;color:var(--ash)}
+        .ad-empty h4{margin:0 0 8px;font-size:1.06rem;color:var(--bone);font-family:var(--f-display)}
+        .ad-empty p{margin:0 auto 16px;max-width:46ch;font-size:.9rem}
+        .ad-note{font-size:.81rem;color:var(--ash);background:rgba(122,51,18,.15);border:1px solid var(--line-2);border-radius:2px 13px 2px 13px;padding:11px 15px;margin-bottom:18px;line-height:1.5}
+        .ad-more{display:flex;justify-content:center;margin-top:18px}
+        .kv{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px 22px;font-size:.92rem}
+        .kv dt{color:var(--ash-dim);font-size:.8rem;letter-spacing:.08em}
+        .kv dd{margin:0;overflow-wrap:anywhere}
+
+        .ad-sheet{position:fixed;inset:0;z-index:98;display:none;justify-content:flex-end}
+        .ad-sheet.on{display:flex}
+        .ad-sheet .vl{position:absolute;inset:0;background:rgba(5,4,3,.78);backdrop-filter:blur(4px)}
+        .ad-sheet .pnl{position:relative;width:min(580px,100%);background:var(--hide);border-left:1px solid var(--line);padding:clamp(20px,3vw,30px);overflow:auto;overscroll-behavior:contain;animation:sheetIn .36s cubic-bezier(.2,.8,.26,1)}
+        @keyframes sheetIn{from{transform:translateX(34px);opacity:0}to{transform:none;opacity:1}}
+        .ad-sheet h3{font-family:var(--f-display);font-size:1.3rem;margin:0 0 20px;padding-right:80px}
+        .ad-sheet .close{position:absolute;right:clamp(20px,3vw,30px);top:clamp(20px,3vw,30px)}
+        .ad-prev{width:76px;height:76px;object-fit:cover;border-radius:3px 18px 3px 18px;border:1px solid var(--line-2);margin-top:4px;background:var(--pelt)}
+        .ad-check{display:flex;align-items:center;gap:10px;font-size:.92rem;color:var(--bone);cursor:pointer;padding:6px 0}
+        .ad-check input{width:18px;height:18px;accent-color:#d1601f;flex:0 0 auto}
+
+        .ftr-admin{background:none;border:0;color:var(--ash-dim);font-size:.8rem;cursor:pointer;padding:0;border-bottom:1px solid transparent;transition:color var(--t-fast),border-color var(--t-fast)}
+        .ftr-admin:hover{color:var(--tuft);border-bottom-color:var(--line)}
+
+        @media(max-width:860px){
+            #admin{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr)}
+            .ad-side{flex-direction:row;align-items:center;gap:7px;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line-2);padding:11px 12px}
+            .ad-brand{display:none}
+            .ad-nav{flex-direction:row;flex:0 0 auto;gap:6px}
+            .ad-nav button{padding:9px 13px;font-size:.86rem;white-space:nowrap}
+            .ad-nav em{display:none}
+            .ad-foot{border:0;margin:0;padding:0;margin-left:auto}
+            .ad-who{display:none}
+            .ad-top{padding:14px 16px;gap:10px}
+            .ad-top h2{flex:1 1 100%;margin-right:0;font-size:1.15rem}
+            .ad-search{flex:1 1 130px;min-width:0}
+            .ad-body{padding:16px}
+            .ad-item{flex-wrap:wrap;gap:10px}
+            .ad-item .th{order:1}
+            .ad-item .when{order:1;margin-left:auto}
+            .ad-item .grow{order:2;flex:1 1 100%}
+            .ad-item .ad-acts{order:3;flex:1 1 100%}
+            .ad-item .ad-acts .ab{flex:1 1 auto;text-align:center}
+            .ad-tiles{gap:10px}
+        }
 
         /* ══════════════════════════ responsive ══════════════════════════ */
         @media(max-width:1080px){:root{--rail:0px}.railbar{display:none}}
@@ -893,6 +985,7 @@
             <span>© <span id="yr">2026</span> DYLNX · <span data-i18n="ftr.rights">All rights reserved</span></span>
             <svg viewBox="0 0 26 14" aria-hidden="true"><path d="M1 14 L8 0 L12 12 Z" fill="#d1601f"/><path d="M25 14 L18 0 L14 12 Z" fill="#f2b765"/></svg>
             <span data-i18n="ftr.made">Built in Nukus, Karakalpakstan</span>
+            <button class="ftr-admin" type="button" id="adminLink">Admin</button>
         </div>
     </footer>
 
@@ -911,53 +1004,73 @@
     </div>
 </div>
 
-<!-- ════════════════ console ════════════════ -->
-<div class="modal" id="opsPanel" role="dialog" aria-modal="true" aria-labelledby="cnTitle" aria-hidden="true">
-    <div class="veil" data-cclose></div>
-    <div class="box">
-        <button class="x" type="button" data-cclose aria-label="Close">✕</button>
-        <h2 id="cnTitle">Console</h2>
-        <div class="sub-t">Staff only. Nothing here is kept after you close the tab.</div>
+<!-- ════════════════ admin panel ════════════════ -->
+<div id="admin" class="anon" role="dialog" aria-modal="true" aria-label="DYLNX admin" aria-hidden="true">
 
-        <form id="cnLogin">
+    <aside class="ad-side">
+        <div class="ad-brand">
+            <svg viewBox="0 0 32 32" aria-hidden="true">
+                <path d="M16 29c-7 0-11-4.6-11-10.4C5 13 9 9.4 16 9.4S27 13 27 18.6C27 24.4 23 29 16 29Z" fill="#17120d" stroke="rgba(242,183,101,.3)" stroke-width="1"/>
+                <path d="M8.6 11.4 L5.4 2.4 L12.6 8.2 Z" fill="#d1601f"/><path d="M23.4 11.4 L26.6 2.4 L19.4 8.2 Z" fill="#d1601f"/>
+                <path d="M5.4 2.8 L3.6 0" stroke="#f2b765" stroke-width="1.2" stroke-linecap="round"/><path d="M26.6 2.8 L28.4 0" stroke="#f2b765" stroke-width="1.2" stroke-linecap="round"/>
+                <circle cx="12" cy="17.6" r="2.1" fill="#cfd96a"/><circle cx="20" cy="17.6" r="2.1" fill="#cfd96a"/>
+                <ellipse cx="16" cy="22.6" rx="2.2" ry="1.5" fill="#7a3312"/>
+            </svg>
+            <div><b>DYLNX</b><i>ADMIN</i></div>
+        </div>
+        <nav class="ad-nav" id="adNav" aria-label="Admin sections">
+            <button type="button" data-view="overview" aria-current="true">Overview</button>
+            <button type="button" data-view="projects">Projects <em data-count="projects">·</em></button>
+            <button type="button" data-view="messages">Messages <em data-count="messages">·</em></button>
+            <button type="button" data-view="subs">Subscribers <em data-count="subs">·</em></button>
+            <button type="button" data-view="users">Users <em data-count="users">·</em></button>
+            <button type="button" data-view="account">Account</button>
+        </nav>
+        <div class="ad-foot">
+            <div class="ad-who" id="adWho">—</div>
+            <button class="ab" type="button" id="adOut" style="width:100%">Sign out</button>
+        </div>
+    </aside>
+
+    <main class="ad-main">
+        <div class="ad-top">
+            <h2 id="adTitle">Overview</h2>
+            <div class="ad-acts" id="adTools"></div>
+            <button class="ab" type="button" id="adExit">View site</button>
+        </div>
+        <div class="ad-body" id="adBody"></div>
+    </main>
+
+    <div class="ad-login">
+        <form class="card" id="adLoginForm" novalidate>
+            <svg viewBox="0 0 32 32" aria-hidden="true">
+                <path d="M16 29c-7 0-11-4.6-11-10.4C5 13 9 9.4 16 9.4S27 13 27 18.6C27 24.4 23 29 16 29Z" fill="#17120d" stroke="rgba(242,183,101,.3)" stroke-width="1"/>
+                <path d="M8.6 11.4 L5.4 2.4 L12.6 8.2 Z" fill="#d1601f"/><path d="M23.4 11.4 L26.6 2.4 L19.4 8.2 Z" fill="#d1601f"/>
+                <path d="M5.4 2.8 L3.6 0" stroke="#f2b765" stroke-width="1.2" stroke-linecap="round"/><path d="M26.6 2.8 L28.4 0" stroke="#f2b765" stroke-width="1.2" stroke-linecap="round"/>
+                <circle cx="12" cy="17.6" r="2.1" fill="#cfd96a"/><circle cx="20" cy="17.6" r="2.1" fill="#cfd96a"/>
+                <ellipse cx="16" cy="22.6" rx="2.2" ry="1.5" fill="#7a3312"/>
+            </svg>
+            <h2>Sign in</h2>
+            <p class="hint">DYLNX staff only. Your session ends when this tab closes.</p>
             <div class="formgrid">
-                <div class="field"><label for="c_u">Username</label><input id="c_u" name="username" type="text" autocomplete="username" required></div>
-                <div class="field"><label for="c_p">Password</label><input id="c_p" name="password" type="password" autocomplete="current-password" required></div>
+                <div class="field wide"><label for="ad_u">Username</label><input id="ad_u" name="username" type="text" autocomplete="username" required></div>
+                <div class="field wide"><label for="ad_p">Password</label><input id="ad_p" name="password" type="password" autocomplete="current-password" required></div>
             </div>
             <div class="sendrow">
-                <button class="btn btn-sm" type="submit" id="cnBtn">Sign in</button>
-                <span class="err" id="cnErr" style="color:#e8854f;font-size:.84rem"></span>
+                <button class="btn btn-sm" type="submit" id="adLoginBtn">Sign in</button>
+                <button class="ftr-admin" type="button" id="adCancel">Back to site</button>
             </div>
+            <p class="err" id="adLoginErr" style="color:#e8854f;font-size:.84rem;margin:14px 0 0"></p>
         </form>
+    </div>
+</div>
 
-        <div id="cnApp" hidden>
-            <div class="tabs">
-                <button type="button" aria-pressed="true" data-tab="me">Account</button>
-                <button type="button" aria-pressed="false" data-tab="msgs">Messages</button>
-                <button type="button" aria-pressed="false" data-tab="projs">Projects</button>
-                <button type="button" aria-pressed="false" data-tab="new">New project</button>
-                <button type="button" id="cnOut" style="margin-left:auto">Sign out</button>
-            </div>
-
-            <div class="pane on" data-pane="me"><dl class="kv" id="cnMe"></dl></div>
-            <div class="pane" data-pane="msgs"><div class="rows" id="cnMsgs"></div></div>
-            <div class="pane" data-pane="projs"><div class="rows" id="cnProjs"></div></div>
-            <div class="pane" data-pane="new">
-                <form id="cnNew">
-                    <div class="formgrid">
-                        <div class="field wide"><label for="n_title">Title</label><input id="n_title" name="title" type="text" minlength="3" maxlength="100" required></div>
-                        <div class="field wide"><label for="n_desc">Description</label><textarea id="n_desc" name="description" minlength="3" maxlength="1000" required></textarea></div>
-                        <div class="field"><label for="n_logo">Logo</label><input id="n_logo" name="logo" type="file" accept="image/*" required></div>
-                        <div class="field"><label for="n_link">Link (optional)</label><input id="n_link" name="link" type="url" maxlength="500" placeholder="https://"></div>
-                        <div class="field wide"><label for="n_imgs">Screens (optional, multiple)</label><input id="n_imgs" name="images" type="file" accept="image/*" multiple></div>
-                    </div>
-                    <div class="sendrow">
-                        <button class="btn btn-sm" type="submit" id="cnNewBtn">Publish project</button>
-                        <span class="err" id="cnNewErr" style="color:#e8854f;font-size:.84rem"></span>
-                    </div>
-                </form>
-            </div>
-        </div>
+<div class="ad-sheet" id="adSheet" aria-hidden="true">
+    <div class="vl" data-sclose></div>
+    <div class="pnl">
+        <button class="ab close" type="button" data-sclose>Close</button>
+        <h3 id="adSheetTitle"></h3>
+        <div id="adSheetBody"></div>
     </div>
 </div>
 
@@ -1597,187 +1710,770 @@
             });
         })();
 
-        /* ═══════════ 10. console ═══════════ */
-        const cn = $("#opsPanel");
+        /* ═══════════ 10. admin ═══════════ */
+        const adRoot = $("#admin");
+        const adSheet = $("#adSheet");
+        const AD = { view:"overview", me:null, projects:[], pNext:null, messages:[], subs:[], users:[], q:"" };
+        let adIdle = null;
 
-        function showApp(){ $("#cnLogin").hidden = true; $("#cnApp").hidden = false; loadMe(); }
-        function showLogin(){ $("#cnLogin").hidden = false; $("#cnApp").hidden = true; }
-
-        function openConsole(){
-            cn.classList.add("on");
-            cn.setAttribute("aria-hidden", "false");
-            document.body.style.overflow = "hidden";
-            if (token()) showApp();
-            else { showLogin(); const u = $("#c_u"); if (u) u.focus(); }
+        /* tiny builder — textContent only, so API data can never become markup */
+        function el(tag, attrs, kids){
+            const n = document.createElement(tag);
+            if (attrs) for (const k in attrs){
+                const v = attrs[k];
+                if (v === null || v === undefined || v === false) continue;
+                if (k === "text") n.textContent = v;
+                else if (k === "class") n.className = v;
+                else if (typeof v === "function") n.addEventListener(k, v);
+                else n.setAttribute(k, v === true ? "" : v);
+            }
+            (kids || []).forEach(function(c){ if (c) n.appendChild(c); });
+            return n;
         }
-        function closeConsole(){
-            cn.classList.remove("on");
-            cn.setAttribute("aria-hidden", "true");
+
+        function rowsOf(d){ return Array.isArray(d) ? d : (d && Array.isArray(d.results) ? d.results : []); }
+        function countOf(d, rows){ return (d && typeof d.count === "number") ? d.count : rows.length; }
+        function when(v){
+            if (!v) return "";
+            const d = new Date(v);
+            return isNaN(d.getTime()) ? "" : d.toLocaleDateString(LANG === "ru" ? "ru-RU" : "en-GB", { day:"2-digit", month:"short", year:"numeric" });
+        }
+        function whenFull(v){
+            if (!v) return "";
+            const d = new Date(v);
+            return isNaN(d.getTime()) ? "" : d.toLocaleString(LANG === "ru" ? "ru-RU" : "en-GB");
+        }
+
+        /* walk DRF pages up to a cap so counts and exports are complete */
+        async function adAll(path, maxPages){
+            const cap = maxPages || 5;
+            let next = path, out = [], total = null, pages = 0;
+            while (next && pages < cap){
+                const d = await authCall(next);
+                const rows = rowsOf(d);
+                out = out.concat(rows);
+                if (total === null) total = countOf(d, rows);
+                next = (d && typeof d.next === "string") ? samePath(d.next) : null;
+                pages++;
+            }
+            return { rows: out, total: (total === null ? out.length : total), more: !!next };
+        }
+
+        function adBody(){ return $("#adBody"); }
+        function adBusy(){ const b = adBody(); b.textContent = ""; b.appendChild(el("div",{class:"ad-empty",text:"Loading…"})); }
+        function adMsg(title, text, label, action){
+            const b = adBody(); b.textContent = "";
+            b.appendChild(el("div",{class:"ad-empty"},[
+                el("h4",{text:title}),
+                el("p",{text:text}),
+                label ? el("button",{class:"ab",type:"button",text:label,click:action}) : null
+            ]));
+        }
+        function setCount(key, val){
+            const n = document.querySelector('[data-count="' + key + '"]');
+            if (n) n.textContent = (val === null || val === undefined) ? "·" : String(val);
+        }
+
+        /* ── open / close / session ── */
+        function adAuthed(on){
+            adRoot.classList.toggle("anon", !on);
+            if (on) adIdleReset(); else clearTimeout(adIdle);
+        }
+        function adIdleReset(){
+            clearTimeout(adIdle);
+            adIdle = setTimeout(function(){
+                setTokens(null, null); AD.me = null; adAuthed(false);
+                toast("Signed out after 30 minutes of inactivity.");
+            }, 1800000);
+        }
+        function adOpen(){
+            adRoot.classList.add("on");
+            adRoot.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+            if (token()){ adAuthed(true); adBoot(); }
+            else { adAuthed(false); const u = $("#ad_u"); if (u) u.focus(); }
+        }
+        function adClose(){
+            sheetClose();
+            adRoot.classList.remove("on");
+            adRoot.setAttribute("aria-hidden", "true");
             document.body.style.overflow = "";
-            if (location.hash === "#console"){
+            if (location.hash === "#admin" || location.hash === "#console"){
                 try { history.replaceState(null, "", location.pathname + location.search); } catch(e){}
             }
         }
-        cn.addEventListener("click", function(e){ if (e.target.closest("[data-cclose]")) closeConsole(); });
-        window.addEventListener("hashchange", function(){ if (location.hash === "#console") openConsole(); });
-        if (location.hash === "#console") openConsole();
-
-        $("#cnLogin").addEventListener("submit", async function(e){
-            e.preventDefault();
-            const slot = $("#cnErr"), btn = $("#cnBtn");
-            slot.textContent = "";
-            btn.disabled = true;
+        async function adBoot(){
+            adBusy();
             try {
-                const d = await call("/api/token/", {
-                    method: "POST",
-                    body: { username: $("#c_u").value.trim(), password: $("#c_p").value }
-                });
-                setTokens(d && d.access, d && d.refresh);
-                $("#c_p").value = "";
-                showApp();
+                AD.me = await authCall("/api/user/me/");
+                $("#adWho").textContent = AD.me && AD.me.username ? ("Signed in as " + AD.me.username) : "Signed in";
             } catch(err){
-                slot.textContent = (err && err.status === 401) ? "Wrong username or password." : reason(err);
-            } finally {
-                btn.disabled = false;
+                if (err && err.status === 401){ setTokens(null, null); adAuthed(false); return; }
             }
+            adGo("overview");
+        }
+        adRoot.addEventListener("pointerdown", adIdleReset);
+        adRoot.addEventListener("keydown", adIdleReset);
+
+        /* ── navigation ── */
+        const AD_VIEWS = {
+            overview:["Overview", vOverview], projects:["Projects", vProjects], messages:["Messages", vMessages],
+            subs:["Subscribers", vSubs], users:["Users", vUsers], account:["Account", vAccount]
+        };
+        function adGo(view){
+            AD.view = AD_VIEWS[view] ? view : "overview";
+            AD.q = "";
+            $$("#adNav button").forEach(function(b){ b.setAttribute("aria-current", String(b.getAttribute("data-view") === AD.view)); });
+            adRender();
+        }
+        function adRender(){
+            const v = AD_VIEWS[AD.view] || AD_VIEWS.overview;
+            $("#adTitle").textContent = v[0];
+            $("#adTools").textContent = "";
+            $("#adBody").textContent = "";
+            v[1]();
+        }
+        $$("#adNav button").forEach(function(b){
+            b.addEventListener("click", function(){ adGo(b.getAttribute("data-view")); });
         });
 
-        $("#cnOut").addEventListener("click", function(){
-            setTokens(null, null);
-            showLogin();
-            toast("Signed out.");
-        });
+        /* ── slide-over sheet ── */
+        function sheetOpen(title, nodes){
+            $("#adSheetTitle").textContent = title;
+            const b = $("#adSheetBody");
+            b.textContent = "";
+            nodes.forEach(function(n){ if (n) b.appendChild(n); });
+            adSheet.classList.add("on");
+            adSheet.setAttribute("aria-hidden", "false");
+            const first = b.querySelector("input,textarea,select");
+            if (first) first.focus();
+        }
+        function sheetClose(){
+            adSheet.classList.remove("on");
+            adSheet.setAttribute("aria-hidden", "true");
+            $("#adSheetBody").textContent = "";
+        }
+        adSheet.addEventListener("click", function(e){ if (e.target.closest("[data-sclose]")) sheetClose(); });
 
-        $$("[data-tab]").forEach(function(t){
-            t.addEventListener("click", function(){
-                const key = t.getAttribute("data-tab");
-                $$("[data-tab]").forEach(function(x){ x.setAttribute("aria-pressed", String(x === t)); });
-                $$("[data-pane]").forEach(function(p){ p.classList.toggle("on", p.getAttribute("data-pane") === key); });
-                if (key === "me") loadMe();
-                if (key === "msgs") loadMsgs();
-                if (key === "projs") loadProjs();
+        /* ── form field factory ── */
+        function fld(id, label, kind, value, extra){
+            extra = extra || {};
+            let input;
+            if (kind === "check"){
+                input = el("input",{id:id,type:"checkbox"});
+                input.checked = !!value;
+                return el("label",{class:"ad-check",for:id},[ input, el("span",{text:label}) ]);
+            }
+            if (kind === "textarea"){ input = el("textarea",{id:id}); input.value = value || ""; }
+            else if (kind === "select"){
+                input = el("select",{id:id});
+                (extra.options || []).forEach(function(o){
+                    const op = el("option",{value:o,text:o});
+                    if (o === value) op.selected = true;
+                    input.appendChild(op);
+                });
+            }
+            else if (kind === "file"){
+                input = el("input",{id:id,type:"file",accept:"image/*"});
+                if (extra.multiple) input.multiple = true;
+            }
+            else { input = el("input",{id:id,type:kind}); input.value = value || ""; }
+            if (extra.maxlength) input.maxLength = extra.maxlength;
+            if (extra.placeholder) input.placeholder = extra.placeholder;
+            if (extra.autocomplete) input.autocomplete = extra.autocomplete;
+            return el("div",{class:"field wide"},[
+                el("label",{for:id,text:label}),
+                input,
+                extra.hint ? el("span",{class:"err",style:"color:var(--ash-dim)",text:extra.hint}) : null
+            ]);
+        }
+        function livePreview(fieldWrap, inputId){
+            const img = el("img",{class:"ad-prev",alt:""});
+            img.hidden = true;
+            fieldWrap.appendChild(img);
+            setTimeout(function(){
+                const inp = document.getElementById(inputId);
+                if (!inp) return;
+                inp.addEventListener("change", function(){
+                    const f = inp.files && inp.files[0];
+                    if (img.src && img.src.indexOf("blob:") === 0) URL.revokeObjectURL(img.src);
+                    if (!f){ img.hidden = true; img.removeAttribute("src"); return; }
+                    img.src = URL.createObjectURL(f);
+                    img.hidden = false;
+                });
+            }, 0);
+            return fieldWrap;
+        }
+        function csvDownload(rows, cols, name){
+            const esc = function(v){ return '"' + String(v === null || v === undefined ? "" : v).replace(/"/g, '""') + '"'; };
+            const lines = [cols.map(function(c){ return esc(c[0]); }).join(",")];
+            rows.forEach(function(r){ lines.push(cols.map(function(c){ return esc(c[1](r)); }).join(",")); });
+            const url = URL.createObjectURL(new Blob(["﻿" + lines.join("\r\n")], { type:"text/csv;charset=utf-8" }));
+            const a = el("a",{href:url,download:name});
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            setTimeout(function(){ URL.revokeObjectURL(url); }, 5000);
+        }
+        function searchBox(placeholder, onType){
+            const s = el("input",{class:"ad-search",type:"search",placeholder:placeholder});
+            s.addEventListener("input", function(){ AD.q = s.value.trim().toLowerCase(); onType(); });
+            return s;
+        }
+
+        /* ══════ overview ══════ */
+        async function vOverview(){
+            adBusy();
+            const res = await Promise.allSettled([
+                authCall("/api/project/"), authCall("/api/message/"),
+                authCall("/api/subscription/"), authCall("/api/user/")
+            ]);
+            const got = res.map(function(x){
+                if (x.status !== "fulfilled") return { ok:false, rows:[], n:null };
+                const rows = rowsOf(x.value);
+                return { ok:true, rows:rows, n:countOf(x.value, rows) };
             });
-        });
+            setCount("projects", got[0].n); setCount("messages", got[1].n);
+            setCount("subs", got[2].n); setCount("users", got[3].n);
 
-        function oneRow(box, text){
-            box.textContent = "";
-            const r = document.createElement("div");
-            r.className = "row";
-            r.textContent = text;
-            box.appendChild(r);
-        }
+            const b = adBody();
+            b.textContent = "";
+            const tiles = el("div",{class:"ad-tiles"});
+            [["Projects","projects",0],["Messages","messages",1],["Subscribers","subs",2],["Users","users",3]].forEach(function(t){
+                const g = got[t[2]];
+                tiles.appendChild(el("button",{class:"ad-tile",type:"button",click:function(){ adGo(t[1]); }},[
+                    el("b",{text: g.n === null ? "—" : String(g.n)}),
+                    el("span",{text: g.ok ? t[0] : t[0] + " · unreachable"})
+                ]));
+            });
+            b.appendChild(tiles);
 
-        async function loadMe(){
-            const box = $("#cnMe");
-            box.textContent = "Loading…";
-            try {
-                const me = await authCall("/api/user/me/");
-                box.textContent = "";
-                [["Username", me.username],
-                    ["Name", [me.first_name, me.last_name].filter(Boolean).join(" ")],
-                    ["Role", me.role],
-                    ["Stack", me.stack],
-                    ["Joined", me.date_joined]].forEach(function(pair){
-                    if (!pair[1]) return;
-                    const dt = document.createElement("dt"); dt.textContent = pair[0];
-                    const dd = document.createElement("dd"); dd.textContent = String(pair[1]);
-                    box.appendChild(dt); box.appendChild(dd);
-                });
-            } catch(err){
-                box.textContent = reason(err);
-                if (err && err.status === 401){ setTokens(null, null); showLogin(); }
+            if (got[1].ok && got[1].rows.length){
+                b.appendChild(el("p",{class:"ad-h",text:"LATEST MESSAGES"}));
+                const list = el("div",{class:"ad-list"});
+                got[1].rows.slice(0, 3).forEach(function(m){ list.appendChild(messageRow(m, true)); });
+                b.appendChild(list);
+            }
+            if (got[0].ok && got[0].rows.length){
+                b.appendChild(el("p",{class:"ad-h",style:"margin-top:28px",text:"LATEST PROJECTS"}));
+                const list = el("div",{class:"ad-list"});
+                got[0].rows.slice(0, 3).forEach(function(p){ list.appendChild(projectRow(p)); });
+                b.appendChild(list);
             }
         }
 
-        async function loadMsgs(){
-            const box = $("#cnMsgs");
-            oneRow(box, "Loading…");
-            try {
-                const d = await authCall("/api/message/");
-                const rows = Array.isArray(d) ? d : ((d && d.results) || []);
-                if (!rows.length){ oneRow(box, "No messages yet."); return; }
-                box.textContent = "";
-                rows.forEach(function(m){
-                    const r = document.createElement("div"); r.className = "row";
-                    const left = document.createElement("div");
-                    const who = document.createElement("strong");
-                    who.textContent = [m.first_name, m.last_name].filter(Boolean).join(" ") || "—";
-                    const what = document.createElement("small"); what.textContent = m.text || "";
-                    const when = document.createElement("small");
-                    when.textContent = m.created_at ? new Date(m.created_at).toLocaleString() : "";
-                    left.appendChild(who); left.appendChild(what); left.appendChild(when);
-                    r.appendChild(left);
-                    box.appendChild(r);
-                });
-            } catch(err){ oneRow(box, reason(err)); }
-        }
-
-        async function loadProjs(){
-            const box = $("#cnProjs");
-            oneRow(box, "Loading…");
+        /* ══════ projects ══════ */
+        async function vProjects(){
+            const tools = $("#adTools");
+            tools.appendChild(searchBox("Search projects", paintProjects));
+            tools.appendChild(el("button",{class:"ab pri",type:"button",text:"New project",click:function(){ projectForm(null); }}));
+            adBusy();
             try {
                 const d = await call("/api/project/");
-                const rows = Array.isArray(d) ? d : ((d && d.results) || []);
-                if (!rows.length){ oneRow(box, "No projects yet."); return; }
-                box.textContent = "";
-                rows.forEach(function(p){
-                    const r = document.createElement("div"); r.className = "row";
-                    const left = document.createElement("div");
-                    const t = document.createElement("strong"); t.textContent = p.title || "—";
-                    const s = document.createElement("small"); s.textContent = clip(p.description, 90);
-                    left.appendChild(t); left.appendChild(s);
-                    const del = document.createElement("button");
-                    del.type = "button";
-                    del.textContent = "Delete";
-                    del.addEventListener("click", async function(){
-                        if (!window.confirm('Delete "' + (p.title || "") + '"? This cannot be undone.')) return;
-                        del.disabled = true;
-                        try {
-                            await authCall("/api/project/" + encodeURIComponent(p.id) + "/", { method: "DELETE" });
-                            r.remove();
-                            toast("Project deleted.");
-                            loadWork(true);
-                        } catch(err){ toast(reason(err), true); del.disabled = false; }
-                    });
-                    r.appendChild(left); r.appendChild(del);
-                    box.appendChild(r);
-                });
-            } catch(err){ oneRow(box, reason(err)); }
+                AD.projects = rowsOf(d);
+                AD.pNext = (d && typeof d.next === "string") ? samePath(d.next) : null;
+                setCount("projects", countOf(d, AD.projects));
+                paintProjects();
+            } catch(err){
+                adMsg("Couldn't load projects", reason(err), "Try again", adRender);
+            }
         }
 
-        $("#cnNew").addEventListener("submit", async function(e){
+        function projectRow(p){
+            const imgs = Array.isArray(p.project_image_project) ? p.project_image_project : [];
+            const logo = safeImg(p.logo);
+            let thumb;
+            if (logo){
+                thumb = el("img",{class:"th",src:logo,alt:"",loading:"lazy",decoding:"async"});
+                thumb.addEventListener("error", function(){ thumb.replaceWith(el("div",{class:"th"})); });
+            } else thumb = el("div",{class:"th"});
+
+            return el("div",{class:"ad-item"},[
+                thumb,
+                el("div",{class:"grow"},[
+                    el("h4",{},[
+                        el("span",{text:p.title || "Untitled"}),
+                        el("span",{class:"tag " + (p.is_active === false ? "off" : "live"), text:p.is_active === false ? "Hidden" : "Live"}),
+                        imgs.length ? el("span",{class:"tag",text:imgs.length + (imgs.length === 1 ? " screen" : " screens")}) : null
+                    ]),
+                    el("p",{text:clip(p.description, 120)})
+                ]),
+                el("span",{class:"when",text:when(p.created_at)}),
+                el("div",{class:"ad-acts"},[
+                    el("button",{class:"ab",type:"button",text:p.is_active === false ? "Publish" : "Hide",click:function(){ toggleProject(p); }}),
+                    el("button",{class:"ab",type:"button",text:"Edit",click:function(){ projectForm(p); }}),
+                    el("button",{class:"ab dang",type:"button",text:"Delete",click:function(){ delProject(p); }})
+                ])
+            ]);
+        }
+
+        function paintProjects(){
+            const b = adBody();
+            b.textContent = "";
+            const q = AD.q;
+            const rows = AD.projects.filter(function(p){
+                return !q || ((p.title || "") + " " + (p.description || "")).toLowerCase().indexOf(q) !== -1;
+            });
+            if (!rows.length){
+                b.appendChild(el("div",{class:"ad-empty"},[
+                    el("h4",{text: q ? "Nothing matches" : "No projects yet"}),
+                    el("p",{text: q ? "Try a different word." : "Publish the first one and it appears on the site straight away."}),
+                    q ? null : el("button",{class:"ab pri",type:"button",text:"New project",click:function(){ projectForm(null); }})
+                ]));
+            } else {
+                const list = el("div",{class:"ad-list"});
+                rows.forEach(function(p){ list.appendChild(projectRow(p)); });
+                b.appendChild(list);
+            }
+            if (AD.pNext){
+                b.appendChild(el("div",{class:"ad-more"},[
+                    el("button",{class:"ab",type:"button",text:"Load more",click:async function(ev){
+                            const btn = ev.currentTarget;
+                            btn.disabled = true;
+                            try {
+                                const d = await call(AD.pNext);
+                                AD.projects = AD.projects.concat(rowsOf(d));
+                                AD.pNext = (d && typeof d.next === "string") ? samePath(d.next) : null;
+                                paintProjects();
+                            } catch(err){ toast(reason(err), true); btn.disabled = false; }
+                        }})
+                ]));
+            }
+        }
+
+        async function toggleProject(p){
+            try {
+                const d = await authCall("/api/project/" + encodeURIComponent(p.id) + "/", { method:"PATCH", body:{ is_active: p.is_active === false } });
+                if (d) Object.assign(p, d);
+                else p.is_active = p.is_active === false;
+                paintProjects();
+                loadWork(true);
+                toast(p.is_active === false ? "Project hidden from the site." : "Project is live.");
+            } catch(err){ toast(reason(err), true); }
+        }
+
+        async function delProject(p){
+            if (!window.confirm('Delete "' + (p.title || "") + '"? This cannot be undone.')) return;
+            try {
+                await authCall("/api/project/" + encodeURIComponent(p.id) + "/", { method:"DELETE" });
+                AD.projects = AD.projects.filter(function(x){ return x.id !== p.id; });
+                setCount("projects", AD.projects.length);
+                paintProjects();
+                loadWork(true);
+                toast("Project deleted.");
+            } catch(err){ toast(reason(err), true); }
+        }
+
+        function projectForm(p){
+            const edit = !!p;
+            const logoField = fld("pf_logo", edit ? "Replace logo (leave empty to keep)" : "Logo", "file", null, {});
+            livePreview(logoField, "pf_logo");
+            const err = el("p",{class:"err",style:"color:#e8854f;font-size:.84rem;margin:14px 0 0"});
+            const save = el("button",{class:"btn btn-sm",type:"button",text:edit ? "Save changes" : "Publish project"});
+
+            const nodes = [
+                edit ? el("div",{class:"ad-note",text:"Extra screens can only be attached when a project is created — the backend's update() ignores the images field."}) : null,
+                fld("pf_title","Title","text", edit ? p.title : "", { maxlength:100, placeholder:"ONLINE OQIW" }),
+                fld("pf_desc","Description","textarea", edit ? p.description : "", { maxlength:1000, hint:"3–1000 characters." }),
+                fld("pf_link","Link","url", edit ? (p.link || "") : "", { placeholder:"https://" }),
+                logoField,
+                edit ? null : fld("pf_imgs","Screens (pick several at once)","file", null, { multiple:true }),
+                fld("pf_active","Show on the site", "check", edit ? p.is_active !== false : true),
+                el("div",{class:"sendrow"},[save]),
+                err
+            ];
+
+            save.addEventListener("click", async function(){
+                err.textContent = "";
+                const title = $("#pf_title").value.trim();
+                const desc = $("#pf_desc").value.trim();
+                const logo = $("#pf_logo").files[0];
+                if (title.length < 3){ err.textContent = "Title needs at least 3 characters."; return; }
+                if (desc.length < 3){ err.textContent = "Description needs at least 3 characters."; return; }
+                if (!edit && !logo){ err.textContent = "Pick a logo image."; return; }
+
+                const fd = new FormData();
+                fd.append("title", title);
+                fd.append("description", desc);
+                fd.append("link", $("#pf_link").value.trim());
+                fd.append("is_active", $("#pf_active").checked ? "true" : "false");
+                if (logo) fd.append("logo", logo);
+                if (!edit){
+                    const extra = $("#pf_imgs").files;
+                    Array.prototype.forEach.call(extra, function(f){ fd.append("images", f); });
+                }
+
+                save.disabled = true;
+                try {
+                    if (edit) await authCall("/api/project/" + encodeURIComponent(p.id) + "/", { method:"PATCH", body:fd, timeout:120000 });
+                    else await authCall("/api/project/", { method:"POST", body:fd, timeout:120000 });
+                    sheetClose();
+                    toast(edit ? "Project saved." : "Project published.");
+                    loadWork(true);
+                    adGo("projects");
+                } catch(e2){
+                    err.textContent = reason(e2);
+                } finally { save.disabled = false; }
+            });
+
+            sheetOpen(edit ? "Edit project" : "New project", nodes);
+        }
+
+        /* ══════ messages ══════ */
+        function readSet(){
+            try { return JSON.parse(localStorage.getItem("dx_read") || "[]"); } catch(e){ return []; }
+        }
+        function readToggle(id){
+            let s = readSet();
+            if (s.indexOf(id) === -1) s.push(id); else s = s.filter(function(x){ return x !== id; });
+            try { localStorage.setItem("dx_read", JSON.stringify(s.slice(-500))); } catch(e){}
+        }
+
+        async function vMessages(){
+            const tools = $("#adTools");
+            tools.appendChild(searchBox("Search name or text", paintMessages));
+            tools.appendChild(el("button",{class:"ab",type:"button",text:"Export CSV",click:function(){
+                    csvDownload(AD.messages, [
+                        ["Name", function(m){ return [m.first_name, m.last_name].filter(Boolean).join(" "); }],
+                        ["Message", function(m){ return m.text; }],
+                        ["Received", function(m){ return m.created_at; }]
+                    ], "dylnx-messages.csv");
+                }}));
+            adBusy();
+            try {
+                const r = await adAll("/api/message/", 5);
+                AD.messages = r.rows;
+                setCount("messages", r.total);
+                paintMessages(r.more);
+            } catch(err){
+                adMsg("Couldn't load messages", reason(err), "Try again", adRender);
+            }
+        }
+
+        function messageRow(m, compact){
+            const read = readSet().indexOf(m.id) !== -1;
+            const name = [m.first_name, m.last_name].filter(Boolean).join(" ") || "—";
+            const node = el("div",{class:"ad-item" + (read || compact ? "" : " unread")},[
+                el("div",{class:"grow"},[
+                    el("h4",{},[ el("span",{text:name}), read && !compact ? el("span",{class:"tag",text:"read"}) : null ]),
+                    el("p",{text: compact ? clip(m.text, 120) : (m.text || "")})
+                ]),
+                el("span",{class:"when",text: compact ? when(m.created_at) : whenFull(m.created_at)}),
+                compact ? null : el("div",{class:"ad-acts"},[
+                    el("button",{class:"ab",type:"button",text: read ? "Unread" : "Mark read",click:function(){ readToggle(m.id); paintMessages(); }}),
+                    el("button",{class:"ab",type:"button",text:"Copy",click:function(){
+                            const txt = name + "\n" + (m.text || "");
+                            if (navigator.clipboard && navigator.clipboard.writeText){
+                                navigator.clipboard.writeText(txt).then(function(){ toast("Copied."); }, function(){ toast("Couldn't copy.", true); });
+                            } else toast("Clipboard isn't available here.", true);
+                        }})
+                ])
+            ]);
+            return node;
+        }
+
+        function paintMessages(more){
+            const b = adBody();
+            b.textContent = "";
+            b.appendChild(el("div",{class:"ad-note",text:"Messages can't be deleted here — the backend has no /api/message/<id>/ route. \"Read\" is remembered in this browser only."}));
+            const q = AD.q;
+            const rows = AD.messages.filter(function(m){
+                return !q || ((m.first_name || "") + " " + (m.last_name || "") + " " + (m.text || "")).toLowerCase().indexOf(q) !== -1;
+            });
+            if (!rows.length){
+                b.appendChild(el("div",{class:"ad-empty"},[
+                    el("h4",{text: q ? "Nothing matches" : "No messages yet"}),
+                    el("p",{text: q ? "Try a different word." : "Everything sent through the contact form lands here."})
+                ]));
+                return;
+            }
+            const list = el("div",{class:"ad-list"});
+            rows.forEach(function(m){ list.appendChild(messageRow(m, false)); });
+            b.appendChild(list);
+            if (more) b.appendChild(el("p",{class:"ad-h",style:"margin-top:16px",text:"SHOWING THE FIRST " + rows.length + " — NARROW WITH SEARCH OR RAISE PAGE_SIZE"}));
+        }
+
+        /* ══════ subscribers ══════ */
+        async function vSubs(){
+            const tools = $("#adTools");
+            tools.appendChild(searchBox("Search email", paintSubs));
+            tools.appendChild(el("button",{class:"ab",type:"button",text:"Export CSV",click:function(){
+                    csvDownload(AD.subs, [["Email", function(s){ return s.email; }], ["Subscribed", function(s){ return s.created_at; }]], "dylnx-subscribers.csv");
+                }}));
+            adBusy();
+            try {
+                const r = await adAll("/api/subscription/", 5);
+                AD.subs = r.rows;
+                setCount("subs", r.total);
+                paintSubs();
+            } catch(err){
+                if (err && err.status >= 500){
+                    adMsg("Subscribers endpoint is throwing",
+                        "apps/subscription/views.py returns permission classes instead of instances. In get_permissions use permissions.AllowAny() and permissions.IsAdminUser() — with parentheses — and the list loads.",
+                        "Try again", adRender);
+                } else {
+                    adMsg("Couldn't load subscribers", reason(err), "Try again", adRender);
+                }
+            }
+        }
+
+        function paintSubs(){
+            const b = adBody();
+            b.textContent = "";
+            b.appendChild(el("div",{class:"ad-note",text:"Read-only — the backend has no /api/subscription/<id>/ route, so addresses can't be removed from here."}));
+            const q = AD.q;
+            const rows = AD.subs.filter(function(s){ return !q || (s.email || "").toLowerCase().indexOf(q) !== -1; });
+            if (!rows.length){
+                b.appendChild(el("div",{class:"ad-empty"},[
+                    el("h4",{text: q ? "Nothing matches" : "No subscribers yet"}),
+                    el("p",{text: q ? "Try a different word." : "The footer form on the site adds addresses here."})
+                ]));
+                return;
+            }
+            const list = el("div",{class:"ad-list"});
+            rows.forEach(function(s){
+                list.appendChild(el("div",{class:"ad-item"},[
+                    el("div",{class:"grow"},[ el("h4",{},[ el("span",{text:s.email || "—"}) ]) ]),
+                    el("span",{class:"when",text:when(s.created_at)})
+                ]));
+            });
+            b.appendChild(list);
+        }
+
+        /* ══════ users ══════ */
+        async function vUsers(){
+            const tools = $("#adTools");
+            tools.appendChild(searchBox("Search users", paintUsers));
+            tools.appendChild(el("button",{class:"ab pri",type:"button",text:"New user",click:function(){ userForm(null); }}));
+            adBusy();
+            try {
+                const r = await adAll("/api/user/", 5);
+                AD.users = r.rows;
+                setCount("users", r.total);
+                paintUsers();
+            } catch(err){
+                adMsg("Couldn't load users", err && err.status === 403 ? "This account isn't staff, so the user list is closed to it." : reason(err), "Try again", adRender);
+            }
+        }
+
+        function paintUsers(){
+            const b = adBody();
+            b.textContent = "";
+            const q = AD.q;
+            const rows = AD.users.filter(function(u){
+                return !q || ((u.username || "") + " " + (u.first_name || "") + " " + (u.last_name || "") + " " + (u.email || "")).toLowerCase().indexOf(q) !== -1;
+            });
+            if (!rows.length){
+                b.appendChild(el("div",{class:"ad-empty"},[ el("h4",{text:"Nothing matches"}), el("p",{text:"Try a different word."}) ]));
+                return;
+            }
+            const mine = AD.me && AD.me.username;
+            const list = el("div",{class:"ad-list"});
+            rows.forEach(function(u){
+                const av = safeImg(u.avatar);
+                let thumb;
+                if (av){
+                    thumb = el("img",{class:"th",src:av,alt:"",loading:"lazy",decoding:"async"});
+                    thumb.addEventListener("error", function(){ thumb.replaceWith(el("div",{class:"th"})); });
+                } else thumb = el("div",{class:"th"});
+                const self = mine && u.username === mine;
+
+                list.appendChild(el("div",{class:"ad-item"},[
+                    thumb,
+                    el("div",{class:"grow"},[
+                        el("h4",{},[
+                            el("span",{text:u.username || "—"}),
+                            u.role ? el("span",{class:"tag key",text:u.role}) : null,
+                            u.is_superuser ? el("span",{class:"tag key",text:"superuser"}) : (u.is_staff ? el("span",{class:"tag key",text:"staff"}) : null),
+                            u.is_active === false ? el("span",{class:"tag off",text:"disabled"}) : null,
+                            self ? el("span",{class:"tag",text:"you"}) : null
+                        ]),
+                        el("p",{text:[[u.first_name, u.last_name].filter(Boolean).join(" "), u.email, u.stack].filter(Boolean).join(" · ") || "—"})
+                    ]),
+                    el("span",{class:"when",text:when(u.date_joined)}),
+                    el("div",{class:"ad-acts"},[
+                        el("button",{class:"ab",type:"button",text:"Edit",click:function(){ userForm(u); }}),
+                        self ? null : el("button",{class:"ab dang",type:"button",text:"Delete",click:function(){ delUser(u); }})
+                    ])
+                ]));
+            });
+            b.appendChild(list);
+        }
+
+        async function delUser(u){
+            if (AD.me && AD.me.username && u.username === AD.me.username){
+                toast("You can't delete the account you're signed in with.", true);
+                return;
+            }
+            if (!window.confirm('Delete user "' + (u.username || "") + '"? This cannot be undone.')) return;
+            try {
+                await authCall("/api/user/" + encodeURIComponent(u.id) + "/", { method:"DELETE" });
+                AD.users = AD.users.filter(function(x){ return x.id !== u.id; });
+                setCount("users", AD.users.length);
+                paintUsers();
+                toast("User deleted.");
+            } catch(err){ toast(reason(err), true); }
+        }
+
+        function userForm(u){
+            const edit = !!u;
+            const avField = fld("uf_avatar", edit ? "Replace avatar (leave empty to keep)" : "Avatar (optional)", "file", null, {});
+            livePreview(avField, "uf_avatar");
+            const err = el("p",{class:"err",style:"color:#e8854f;font-size:.84rem;margin:14px 0 0"});
+            const save = el("button",{class:"btn btn-sm",type:"button",text:edit ? "Save changes" : "Create user"});
+
+            const nodes = edit ? [
+                el("div",{class:"ad-note",text:"Editing goes through UpdateUserSerializer, which only accepts avatar, stack, first name and last name. Username, email, role and permissions are set at creation or in Django admin."}),
+                fld("uf_first","First name","text", u.first_name, { maxlength:150 }),
+                fld("uf_last","Last name","text", u.last_name, { maxlength:150 }),
+                fld("uf_stack","Stack","text", u.stack, { maxlength:20, placeholder:"Python" }),
+                avField,
+                el("div",{class:"sendrow"},[save]),
+                err
+            ] : [
+                fld("uf_username","Username","text","", { maxlength:150, autocomplete:"off" }),
+                fld("uf_password","Password","password","", { autocomplete:"new-password" }),
+                fld("uf_email","Email","email","", { maxlength:254 }),
+                fld("uf_first","First name","text","", { maxlength:150 }),
+                fld("uf_last","Last name","text","", { maxlength:150 }),
+                fld("uf_role","Role","select","USER", { options:["USER","EMPLOYEE","ADMIN"] }),
+                fld("uf_stack","Stack","text","", { maxlength:20, placeholder:"Python" }),
+                avField,
+                fld("uf_active","Account enabled","check", true),
+                fld("uf_staff","Staff — may use this admin panel","check", false),
+                fld("uf_super","Superuser — full access","check", false),
+                el("div",{class:"sendrow"},[save]),
+                err
+            ];
+
+            save.addEventListener("click", async function(){
+                err.textContent = "";
+                const avatar = $("#uf_avatar").files[0];
+                save.disabled = true;
+                try {
+                    if (edit){
+                        const fd = new FormData();
+                        fd.append("first_name", $("#uf_first").value.trim());
+                        fd.append("last_name", $("#uf_last").value.trim());
+                        fd.append("stack", $("#uf_stack").value.trim());
+                        if (avatar) fd.append("avatar", avatar);
+                        await authCall("/api/user/" + encodeURIComponent(u.id) + "/", { method:"PATCH", body:fd, timeout:90000 });
+                        toast("User saved.");
+                    } else {
+                        const username = $("#uf_username").value.trim();
+                        const password = $("#uf_password").value;
+                        if (username.length < 2){ err.textContent = "Username is required."; save.disabled = false; return; }
+                        if (password.length < 8){ err.textContent = "Password needs at least 8 characters."; save.disabled = false; return; }
+                        const base = {
+                            username: username, password: password,
+                            email: $("#uf_email").value.trim(),
+                            first_name: $("#uf_first").value.trim(),
+                            last_name: $("#uf_last").value.trim(),
+                            role: $("#uf_role").value,
+                            stack: $("#uf_stack").value.trim(),
+                            is_active: $("#uf_active").checked,
+                            is_staff: $("#uf_staff").checked,
+                            is_superuser: $("#uf_super").checked
+                        };
+                        let body;
+                        if (avatar){
+                            body = new FormData();
+                            for (const k in base) body.append(k, typeof base[k] === "boolean" ? (base[k] ? "true" : "false") : base[k]);
+                            body.append("avatar", avatar);
+                        } else body = base;
+                        await authCall("/api/user/", { method:"POST", body:body, timeout:90000 });
+                        toast("User created.");
+                    }
+                    sheetClose();
+                    adGo("users");
+                } catch(e2){
+                    if (edit && e2 && e2.status >= 500){
+                        err.textContent = "Backend error: UpdateUserSerializer lists \"fist_name\" — it should be \"first_name\". Fix that field and editing works.";
+                    } else err.textContent = reason(e2);
+                } finally { save.disabled = false; }
+            });
+
+            sheetOpen(edit ? ("Edit " + (u.username || "user")) : "New user", nodes);
+        }
+
+        /* ══════ account ══════ */
+        async function vAccount(){
+            adBusy();
+            try {
+                const me = await authCall("/api/user/me/");
+                AD.me = me;
+                $("#adWho").textContent = me && me.username ? ("Signed in as " + me.username) : "Signed in";
+                const b = adBody();
+                b.textContent = "";
+                const dl = el("dl",{class:"kv"});
+                [["Username", me.username],
+                    ["Name", [me.first_name, me.last_name].filter(Boolean).join(" ")],
+                    ["Email", me.email],
+                    ["Role", me.role],
+                    ["Stack", me.stack],
+                    ["Staff", me.is_staff === undefined ? null : (me.is_staff ? "yes" : "no")],
+                    ["Superuser", me.is_superuser === undefined ? null : (me.is_superuser ? "yes" : "no")],
+                    ["Joined", whenFull(me.date_joined)],
+                    ["Last login", whenFull(me.last_login)]].forEach(function(pair){
+                    if (!pair[1]) return;
+                    dl.appendChild(el("dt",{text:pair[0]}));
+                    dl.appendChild(el("dd",{text:String(pair[1])}));
+                });
+                b.appendChild(dl);
+                b.appendChild(el("div",{class:"ad-note",style:"margin:24px 0 0",text:"Tokens live in this tab only and are dropped after 30 minutes of inactivity. Closing the tab signs you out."}));
+                if (me.id){
+                    b.appendChild(el("div",{class:"sendrow"},[
+                        el("button",{class:"ab",type:"button",text:"Edit my profile",click:function(){ userForm(me); }})
+                    ]));
+                }
+            } catch(err){
+                adMsg("Couldn't load your account", reason(err), "Try again", adRender);
+            }
+        }
+
+        /* ── session controls ── */
+        $("#adLoginForm").addEventListener("submit", async function(e){
             e.preventDefault();
-            const slot = $("#cnNewErr"), btn = $("#cnNewBtn");
+            const slot = $("#adLoginErr"), btn = $("#adLoginBtn");
             slot.textContent = "";
-            const logo = $("#n_logo").files[0];
-            if (!logo){ slot.textContent = "Pick a logo image."; return; }
-
-            const fd = new FormData();
-            fd.append("title", $("#n_title").value.trim());
-            fd.append("description", $("#n_desc").value.trim());
-            fd.append("logo", logo);
-            const link = $("#n_link").value.trim();
-            if (link) fd.append("link", link);
-            Array.prototype.forEach.call($("#n_imgs").files, function(f){ fd.append("images", f); });
-
             btn.disabled = true;
             try {
-                await authCall("/api/project/", { method: "POST", body: fd, timeout: 60000 });
-                $("#cnNew").reset();
-                toast("Project published.");
-                loadWork(true);
+                const d = await call("/api/token/", { method:"POST", body:{ username: $("#ad_u").value.trim(), password: $("#ad_p").value } });
+                setTokens(d && d.access, d && d.refresh);
+                $("#ad_p").value = "";
+                adAuthed(true);
+                adBoot();
             } catch(err){
-                slot.textContent = reason(err);
-            } finally {
-                btn.disabled = false;
-            }
+                slot.textContent = (err && err.status === 401) ? "Wrong username or password." : reason(err);
+            } finally { btn.disabled = false; }
         });
+        $("#adOut").addEventListener("click", function(){
+            setTokens(null, null);
+            AD.me = null;
+            AD.projects = []; AD.messages = []; AD.subs = []; AD.users = [];
+            ["projects","messages","subs","users"].forEach(function(k){ setCount(k, null); });
+            $("#adWho").textContent = "—";
+            $("#adLoginErr").textContent = "";
+            adAuthed(false);
+            toast("Signed out.");
+        });
+        $("#adExit").addEventListener("click", adClose);
+        $("#adCancel").addEventListener("click", adClose);
+        $("#adminLink").addEventListener("click", function(){
+            try { history.replaceState(null, "", "#admin"); } catch(e){}
+            adOpen();
+        });
+        window.addEventListener("hashchange", function(){
+            if (location.hash === "#admin" || location.hash === "#console") adOpen();
+        });
+        if (location.hash === "#admin" || location.hash === "#console") adOpen();
 
         /* ═══════════ 11. global keys ═══════════ */
         document.addEventListener("keydown", function(e){
             if (e.key !== "Escape") return;
+            if (adSheet.classList.contains("on")){ sheetClose(); return; }
+            if (adRoot.classList.contains("on")){ adClose(); return; }
             if (pm.classList.contains("on")) closeModal();
-            else if (cn.classList.contains("on")) closeConsole();
             closeMenu();
         });
 
