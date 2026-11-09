@@ -357,6 +357,39 @@
         .svc p{font-size:.95rem;color:var(--ash);margin:0;position:relative}
         .svc .tech{margin-top:16px;font-size:.78rem;letter-spacing:.1em;color:var(--ash-dim);position:relative}
 
+        /* ══════════════════════════ team ══════════════════════════ */
+        .team{display:grid;grid-template-columns:repeat(auto-fit,minmax(252px,1fr));gap:clamp(14px,1.8vw,24px)}
+        .tm{position:relative;display:flex;flex-direction:column;gap:14px;overflow:hidden;
+            padding:clamp(24px,2.8vw,32px) clamp(22px,2.4vw,28px) clamp(26px,3vw,32px);
+            background:linear-gradient(168deg,var(--hide),var(--pelt) 86%);
+            border:1px solid var(--line-2);border-radius:3px 26px 3px 26px;
+            transition:border-color var(--t-med),transform var(--t-med)}
+        .tm:nth-child(2n){border-radius:26px 3px 26px 3px}
+        .tm:hover{border-color:rgba(242,183,101,.22);transform:translateY(-3px)}
+        .tm::after{content:"";position:absolute;right:-30px;top:-34px;width:120px;height:112px;
+            background:radial-gradient(circle at 40% 40%,rgba(122,51,18,.36),transparent 68%);
+            border-radius:54% 46% 61% 39%/47% 58% 42% 53%;opacity:.3;transition:opacity var(--t-med),transform var(--t-med)}
+        .tm:hover::after{opacity:.75;transform:scale(1.12) rotate(-8deg)}
+        .tm > *{position:relative}
+        .tm .ph{width:94px;height:94px;flex-shrink:0;display:grid;place-items:center;overflow:hidden;
+            background:linear-gradient(150deg,rgba(122,51,18,.55),rgba(209,96,31,.14));
+            border:1px solid var(--line-2);
+            border-radius:54% 46% 61% 39%/47% 58% 42% 53%;
+            animation:spotMorph 15s ease-in-out infinite}
+        .tm:nth-child(2n) .ph{animation-delay:-5s}
+        .tm:nth-child(3n) .ph{animation-delay:-9s}
+        .tm .ph img{width:100%;height:100%;object-fit:cover}
+        .tm .ph span{font-family:var(--f-display);font-weight:700;font-size:1.65rem;letter-spacing:.04em;color:var(--tuft);opacity:.85}
+        .tm h3{font-size:1.14rem;line-height:1.2}
+        .tm .roles{display:flex;flex-wrap:wrap;gap:6px;margin-top:-6px}
+        .tm .roles span{font-size:.71rem;letter-spacing:.07em;color:var(--ash-dim);border:1px solid var(--line-2);border-radius:20px;padding:3px 10px}
+        .tm .roles span.cap{color:var(--tuft);border-color:rgba(242,183,101,.3)}
+        .tm .bio{font-size:.9rem;color:var(--ash);margin:0;white-space:pre-line}
+        .tm .links{display:flex;flex-direction:column;gap:0;margin-top:auto;padding-top:4px}
+        .tm .links a{font-size:.86rem;color:var(--ash);border-bottom:1px solid var(--line-2);padding:9px 0;overflow-wrap:anywhere;transition:color var(--t-fast),border-color var(--t-fast)}
+        .tm .links a:hover{color:var(--tuft);border-bottom-color:var(--ember)}
+        .tm .slot{font-size:.78rem;color:var(--ash-dim);border:1px dashed var(--line-2);border-radius:2px 12px 2px 12px;padding:9px 12px;margin-top:4px}
+
         /* ══════════════════════════ work ══════════════════════════ */
         .grid-work{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:clamp(14px,1.8vw,24px)}
         .pcard{
@@ -754,9 +787,10 @@
     </a>
 
     <nav class="nav" aria-label="Sections">
-        <a href="#studio" data-jump="#studio" data-i18n="nav.studio">Studio</a>
+        <a href="#studio" data-jump="#studio" data-i18n="nav.studio">About</a>
         <a href="#services" data-jump="#services" data-i18n="nav.services">Services</a>
         <a href="#work" data-jump="#work" data-i18n="nav.work">Work</a>
+        <a href="#team" data-jump="#team" data-i18n="nav.team">People</a>
         <a href="#contact" data-jump="#contact" data-i18n="nav.contact">Contact</a>
     </nav>
 
@@ -764,28 +798,34 @@
         <div class="lang" role="group" aria-label="Language">
             <button type="button" data-setlang="en" aria-pressed="true">EN</button>
             <button type="button" data-setlang="ru" aria-pressed="false">RU</button>
+            <button type="button" data-setlang="uz" aria-pressed="false">UZ</button>
+            <button type="button" data-setlang="kaa" aria-pressed="false">KAA</button>
         </div>
         <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="sheetnav" aria-label="Menu"><i></i><i></i><i></i></button>
     </div>
 </header>
 
 <nav class="sheetnav" id="sheetnav" aria-label="Sections">
-    <a href="#studio" data-jump="#studio" data-i18n="nav.studio">Studio</a>
+    <a href="#studio" data-jump="#studio" data-i18n="nav.studio">About</a>
     <a href="#services" data-jump="#services" data-i18n="nav.services">Services</a>
     <a href="#work" data-jump="#work" data-i18n="nav.work">Work</a>
+    <a href="#team" data-jump="#team" data-i18n="nav.team">People</a>
     <a href="#contact" data-jump="#contact" data-i18n="nav.contact">Contact</a>
     <div class="lang" style="margin-top:30px;width:fit-content">
         <button type="button" data-setlang="en" aria-pressed="true">EN</button>
         <button type="button" data-setlang="ru" aria-pressed="false">RU</button>
+        <button type="button" data-setlang="uz" aria-pressed="false">UZ</button>
+        <button type="button" data-setlang="kaa" aria-pressed="false">KAA</button>
     </div>
 </nav>
 
 <!-- ════════════════ left rail ════════════════ -->
 <div class="railbar" id="railbar">
     <a class="rail-dot" href="#top" data-jump="#top" data-rail="top" aria-label="Top"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 13 L1.6 2 L8 8 L14.4 2 L12 13 Z" fill="none" stroke="#f2b765" stroke-width="1.3"/></svg><span aria-hidden="true">top</span></a>
-    <a class="rail-dot" href="#studio" data-jump="#studio" data-rail="studio" aria-label="Studio"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 13 L1.6 2 L8 8 L14.4 2 L12 13 Z" fill="none" stroke="#f2b765" stroke-width="1.3"/></svg><span aria-hidden="true">studio</span></a>
+    <a class="rail-dot" href="#studio" data-jump="#studio" data-rail="studio" aria-label="Studio"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 13 L1.6 2 L8 8 L14.4 2 L12 13 Z" fill="none" stroke="#f2b765" stroke-width="1.3"/></svg><span aria-hidden="true">about</span></a>
     <a class="rail-dot" href="#services" data-jump="#services" data-rail="services" aria-label="Services"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 13 L1.6 2 L8 8 L14.4 2 L12 13 Z" fill="none" stroke="#f2b765" stroke-width="1.3"/></svg><span aria-hidden="true">services</span></a>
     <a class="rail-dot" href="#work" data-jump="#work" data-rail="work" aria-label="Work"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 13 L1.6 2 L8 8 L14.4 2 L12 13 Z" fill="none" stroke="#f2b765" stroke-width="1.3"/></svg><span aria-hidden="true">work</span></a>
+    <a class="rail-dot" href="#team" data-jump="#team" data-rail="team" aria-label="Team"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 13 L1.6 2 L8 8 L14.4 2 L12 13 Z" fill="none" stroke="#f2b765" stroke-width="1.3"/></svg><span aria-hidden="true">people</span></a>
     <a class="rail-dot" href="#contact" data-jump="#contact" data-rail="contact" aria-label="Contact"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 13 L1.6 2 L8 8 L14.4 2 L12 13 Z" fill="none" stroke="#f2b765" stroke-width="1.3"/></svg><span aria-hidden="true">contact</span></a>
 </div>
 
@@ -815,7 +855,7 @@
 
         <div class="hero-grid">
             <div>
-                <p class="hero-claim" data-i18n="hero.claim">Quiet backends. Fast when it counts.</p>
+                <p class="hero-claim" data-i18n="hero.claim">Code, circuits, and everything in between.</p>
                 <div class="hero-cta">
                     <button class="btn" type="button" data-jump="#work">
                         <svg class="tufts" viewBox="0 0 26 14" aria-hidden="true"><path d="M1 14 L8 0 L12 12 Z" fill="#d1601f"/><path d="M25 14 L18 0 L14 12 Z" fill="#f2b765"/></svg>
@@ -824,7 +864,7 @@
                     <button class="tlink" type="button" data-jump="#contact"><span data-i18n="hero.cta2">Start a project</span></button>
                 </div>
             </div>
-            <p class="lede" data-i18n="hero.lede">A software studio in Nukus. We build APIs, AI assistants and Telegram systems that stay up long after launch.</p>
+            <p class="lede" data-i18n="hero.lede">A four-person team in Nukus building software, hardware and robotics — plus products of our own. If an order fits no category, bring it anyway.</p>
         </div>
 
         <div class="scrollcue" aria-hidden="true"><i></i><span data-i18n="hero.scroll">scroll</span></div>
@@ -846,56 +886,56 @@
     <!-- ════════════════ studio ════════════════ -->
     <section class="sec" id="studio">
         <div class="sec-head rv">
-            <h2 class="h-sec"><span class="tufted" data-i18n="studio.title">The studio</span></h2>
+            <h2 class="h-sec"><span class="tufted" data-i18n="studio.title">The team</span></h2>
             <div class="measure">
-                <p data-i18n="studio.p1">DYLNX is a small team in Nukus, Karakalpakstan. We write the part of a product that nobody sees and everybody depends on: the API, the database, the admin panel, the bot that answers at 3am.</p>
-                <p class="mut" data-i18n="studio.p2">We take a lynx as our mark for a reason. It waits, it watches, and it moves only when moving is the right answer. Software built that way needs fewer rewrites.</p>
+                <p data-i18n="studio.p1">DYLNX came together on 2 November 2026 in Nukus, Karakalpakstan. Four specialists: developers, software and hardware engineers, robotics. Between us we carry a project end to end — the screen you click, the server behind it, the board inside the case, and the part that moves.</p>
+                <p class="mut" data-i18n="studio.p2">We take a lynx as our mark for a reason. It waits, it watches, and it moves only when moving is the right answer. Work built that way needs fewer rewrites.</p>
             </div>
         </div>
         <div class="stats rv">
-            <div class="stat"><b>3+</b><span data-i18n="stat.years">years shipping Python backends</span></div>
-            <div class="stat"><b>20+</b><span data-i18n="stat.projects">projects delivered</span></div>
-            <div class="stat"><b>24h</b><span data-i18n="stat.reply">typical reply time</span></div>
-            <div class="stat"><b>Nukus</b><span data-i18n="stat.place">Karakalpakstan, Uzbekistan</span></div>
+            <div class="stat"><b data-i18n="stat.v.people">4</b><span data-i18n="stat.people">specialists on the team</span></div>
+            <div class="stat"><b data-i18n="stat.v.born">2 Nov 2026</b><span data-i18n="stat.born">the day the team came together</span></div>
+            <div class="stat"><b data-i18n="stat.v.reply">24h</b><span data-i18n="stat.reply">typical reply time</span></div>
+            <div class="stat"><b data-i18n="stat.v.place">Nukus</b><span data-i18n="stat.place">Karakalpakstan, Uzbekistan</span></div>
         </div>
     </section>
 
     <!-- ════════════════ services ════════════════ -->
     <section class="sec" id="services">
         <div class="sec-head rv">
-            <h2 class="h-sec"><span class="tufted" data-i18n="svc.title">What we build</span></h2>
-            <p class="measure mut" data-i18n="svc.sub">Five things we do often enough to do them well. If your problem looks close to one of these, we can estimate it in a day.</p>
+            <h2 class="h-sec"><span class="tufted" data-i18n="svc.title">What we take on</span></h2>
+            <p class="measure mut" data-i18n="svc.sub">Software, hardware, robotics, products of our own — and teaching. If what you need is not on this list, ask anyway: we have taken on stranger things.</p>
         </div>
         <div class="svcs">
             <article class="svc rv">
                 <svg class="tufts" viewBox="0 0 26 14" aria-hidden="true"><path d="M1 14 L8 0 L12 12 Z" fill="#d1601f"/><path d="M25 14 L18 0 L14 12 Z" fill="#f2b765"/></svg>
-                <h3 class="h-card" data-i18n="svc.1.t">Backends and APIs</h3>
-                <p data-i18n="svc.1.d">Auth, payments, file storage, admin panels, rate limits. The parts that have to be right before anything else can ship.</p>
-                <div class="tech">Django REST · FastAPI · PostgreSQL</div>
+                <h3 class="h-card" data-i18n="svc.1.t">Software, front to back</h3>
+                <p data-i18n="svc.1.d">Websites and web platforms, mobile, Telegram bots, admin panels, APIs and databases. The same team writes the interface and everything behind it, so nothing gets lost in between.</p>
+                <div class="tech">React · Django REST · FastAPI · PostgreSQL</div>
             </article>
             <article class="svc rv">
                 <svg class="tufts" viewBox="0 0 26 14" aria-hidden="true"><path d="M1 14 L8 0 L12 12 Z" fill="#d1601f"/><path d="M25 14 L18 0 L14 12 Z" fill="#f2b765"/></svg>
-                <h3 class="h-card" data-i18n="svc.2.t">AI assistants on your data</h3>
-                <p data-i18n="svc.2.d">A retrieval system over your own documents, so answers come from your regulations and price lists instead of the open internet.</p>
-                <div class="tech">Gemini · ChromaDB · RAG</div>
+                <h3 class="h-card" data-i18n="svc.2.t">Hardware and electronics</h3>
+                <p data-i18n="svc.2.d">Boards, sensors, controllers and enclosures. From a schematic on paper to a working device on your table — prototype first, production after.</p>
+                <div class="tech">ESP32 · Arduino · STM32 · 3D printing</div>
             </article>
             <article class="svc rv">
                 <svg class="tufts" viewBox="0 0 26 14" aria-hidden="true"><path d="M1 14 L8 0 L12 12 Z" fill="#d1601f"/><path d="M25 14 L18 0 L14 12 Z" fill="#f2b765"/></svg>
-                <h3 class="h-card" data-i18n="svc.3.t">Telegram systems</h3>
-                <p data-i18n="svc.3.d">Bots that sell, teach, check subscriptions and collect receipts. Built async, with an admin side a non-developer can run.</p>
-                <div class="tech">aiogram 3 · SQLAlchemy · webhooks</div>
+                <h3 class="h-card" data-i18n="svc.3.t">Robotics and engineering</h3>
+                <p data-i18n="svc.3.d">Robots, automated rigs, smart-home and industrial models. Mechanics, electronics and the code that drives them, built by the same four people.</p>
+                <div class="tech">mechanics · control · firmware</div>
             </article>
             <article class="svc rv">
                 <svg class="tufts" viewBox="0 0 26 14" aria-hidden="true"><path d="M1 14 L8 0 L12 12 Z" fill="#d1601f"/><path d="M25 14 L18 0 L14 12 Z" fill="#f2b765"/></svg>
-                <h3 class="h-card" data-i18n="svc.4.t">Web platforms</h3>
-                <p data-i18n="svc.4.d">Learning platforms, dashboards and marketplaces: one codebase, one admin, your branding, your domain.</p>
-                <div class="tech">DRF · Vercel · Cloudflare R2</div>
+                <h3 class="h-card" data-i18n="svc.4.t">Products of our own</h3>
+                <p data-i18n="svc.4.d">Things we design, build and manufacture ourselves, then sell or license: devices, platforms, AI assistants. Ask what is ready now, or commission a version of your own.</p>
+                <div class="tech">design · build · manufacture</div>
             </article>
             <article class="svc rv">
                 <svg class="tufts" viewBox="0 0 26 14" aria-hidden="true"><path d="M1 14 L8 0 L12 12 Z" fill="#d1601f"/><path d="M25 14 L18 0 L14 12 Z" fill="#f2b765"/></svg>
-                <h3 class="h-card" data-i18n="svc.5.t">Teaching</h3>
-                <p data-i18n="svc.5.d">Programming courses in Nukus. Python and backend, taught on real projects rather than slides.</p>
-                <div class="tech">Python · backend · mentoring</div>
+                <h3 class="h-card" data-i18n="svc.5.t">Anything else, and teaching</h3>
+                <p data-i18n="svc.5.d">Orders that fit no category, plus courses and mentoring in Nukus — programming, electronics and robotics, taught on real projects.</p>
+                <div class="tech">custom orders · courses · students</div>
             </article>
         </div>
     </section>
@@ -925,12 +965,21 @@
         <path class="nose" d="M203 45 Q220 38 237 45 Q237 59 220 68 Q203 59 203 45 Z"/>
     </svg>
 
+    <!-- ════════════════ team ════════════════ -->
+    <section class="sec" id="team">
+        <div class="sec-head rv">
+            <h2 class="h-sec"><span class="tufted" data-i18n="team.title">The four of us</span></h2>
+            <p class="measure mut" data-i18n="team.sub">Photo, contacts and a line about the work — each person keeps their own card current from the admin panel.</p>
+        </div>
+        <div class="team" id="teamGrid" aria-live="polite"></div>
+    </section>
+
     <!-- ════════════════ contact ════════════════ -->
     <section class="sec" id="contact">
         <div class="contact-grid">
             <div class="rv">
                 <h2 class="h-sec"><span class="tufted" data-i18n="ct.title">Write to us</span></h2>
-                <p class="mut" style="margin-top:18px;max-width:34ch" data-i18n="ct.sub">Tell us what you are building and where it is stuck. A real person reads every message.</p>
+                <p class="mut" style="margin-top:18px;max-width:34ch" data-i18n="ct.sub">Tell us what you need built — code, a device, or both. A real person reads every message.</p>
                 <div class="chan">
                     <a href="https://t.me/qit_company" target="_blank" rel="noopener noreferrer"><span>Telegram</span><em>@qit_company</em></a>
                     <a href="mailto:hello@dylnx.uz"><span>Email</span><em>hello@dylnx.uz</em></a>
@@ -1024,6 +1073,7 @@
             <button type="button" data-view="messages">Messages <em data-count="messages">·</em></button>
             <button type="button" data-view="subs">Subscribers <em data-count="subs">·</em></button>
             <button type="button" data-view="users">Users <em data-count="users">·</em></button>
+            <button type="button" data-view="team">Team cards</button>
             <button type="button" data-view="account">Account</button>
         </nav>
         <div class="ad-foot">
@@ -1187,76 +1237,178 @@
         }
 
         /* ═══════════ 2. copy ═══════════ */
-        const RU = {
-            "nav.studio":"Студия","nav.services":"Услуги","nav.work":"Работы","nav.contact":"Контакты",
-            "hero.claim":"Тихие бекенды. Быстрые, когда это важно.",
-            "hero.lede":"Студия разработки в Нукусе. Делаем API, AI-ассистентов и Telegram-системы, которые живут и после запуска.",
-            "hero.cta":"Смотреть работы","hero.cta2":"Начать проект","hero.scroll":"вниз",
-            "studio.title":"Студия",
-            "studio.p1":"DYLNX — небольшая команда в Нукусе, Каракалпакстан. Мы пишем ту часть продукта, которую никто не видит и от которой всё зависит: API, базу, админку, бота, который отвечает в три ночи.",
-            "studio.p2":"Рысь на нашем знаке не случайно. Она ждёт, смотрит и двигается только тогда, когда это правильный ответ. Софт, собранный так же, реже приходится переписывать.",
-            "stat.years":"года на Python-бекендах","stat.projects":"проектов сдано","stat.reply":"обычное время ответа","stat.place":"Каракалпакстан, Узбекистан",
-            "svc.title":"Что мы делаем",
-            "svc.sub":"Пять направлений, которые мы делаем достаточно часто, чтобы делать их хорошо. Если ваша задача похожа — оценим за день.",
-            "svc.1.t":"Бекенды и API","svc.1.d":"Авторизация, платежи, файлы, админки, лимиты запросов. То, что должно работать раньше всего остального.",
-            "svc.2.t":"AI-ассистенты на ваших данных","svc.2.d":"Поиск по вашим документам, чтобы ответы приходили из ваших регламентов и прайсов, а не из интернета.",
-            "svc.3.t":"Telegram-системы","svc.3.d":"Боты, которые продают, учат, проверяют подписку и собирают чеки. Асинхронные, с админкой для не-программиста.",
-            "svc.4.t":"Веб-платформы","svc.4.d":"Учебные платформы, дашборды и маркетплейсы: одна кодовая база, одна админка, ваш бренд, ваш домен.",
-            "svc.5.t":"Обучение","svc.5.d":"Курсы программирования в Нукусе. Python и бекенд — на реальных проектах, а не на слайдах.",
-            "work.title":"Работы","work.sub":"Опубликованные проекты, прямо из нашего API. Откройте любой, чтобы посмотреть экраны.","work.more":"Показать ещё",
-            "ct.title":"Напишите нам","ct.sub":"Расскажите, что вы строите и где застряли. Каждое сообщение читает живой человек.",
-            "ct.first":"Ваше имя","ct.last":"Фамилия (необязательно)","ct.text":"Что нужно сделать?","ct.send":"Отправить",
-            "ct.note":"Только имя и сообщение. Лишнего не спрашиваем.","ct.where":"Где мы",
-            "sub.title":"Остаться на связи","sub.sub":"Короткое письмо, когда выпустим что-то стоящее. Не чаще.","sub.cta":"Подписаться",
-            "ftr.rights":"Все права защищены","ftr.made":"Сделано в Нукусе, Каракалпакстан",
-            /* runtime-only strings */
-            "work.empty.t":"Пока ничего не опубликовано","work.empty.d":"Проекты появятся здесь, как только мы их выложим. А пока просто напишите нам.",
-            "work.fail.t":"Работы не загрузились","work.fail.d":"Обновите страницу или напишите нам — мы ответим и без этого раздела.",
-            "work.retry":"Попробовать снова","work.open":"Открыть проект","work.view":"Подробнее","work.shots":"экранов",
-            "work.similar":"Обсудить похожее",
-            "ok.msg":"Сообщение отправлено. Ответим в течение дня.","ok.sub":"Готово. Вы в списке.",
-            "err.generic":"Не получилось. Попробуйте ещё раз.",
-            "err.network":"Нет связи с сервером. Проверьте интернет и повторите.",
-            "err.timeout":"Сервер не ответил вовремя. Повторите попытку.",
-            "err.rate":"Слишком много запросов. Подождите минуту и повторите.",
-            "err.server":"На сервере сбой. Попробуйте позже.",
-            "err.auth":"Доступ запрещён. Войдите снова.",
-            "v.name":"Введите имя.","v.text":"Опишите задачу — хотя бы в двух предложениях.","v.email":"Введите корректный e-mail.",
-            "sub.dupe":"Этот адрес уже в списке."
+        const I18N = {
+            ru: {
+                "nav.studio":"О нас","nav.services":"Услуги","nav.work":"Работы","nav.team":"Команда","nav.contact":"Контакты",
+                "hero.claim":"Код, схемы и всё, что между ними.",
+                "hero.lede":"Команда из четырёх человек в Нукусе: софт, железо и робототехника, плюс собственные продукты. Если заказ не попадает ни в одну категорию — всё равно приносите.",
+                "hero.cta":"Смотреть работы","hero.cta2":"Начать проект","hero.scroll":"вниз",
+                "studio.title":"Команда",
+                "studio.p1":"DYLNX собралась 2 ноября 2026 года в Нукусе, Каракалпакстан. Четыре специалиста: разработчики, инженеры по софту и по железу, робототехника. Вместе мы ведём проект от начала до конца — экран, на который вы нажимаете, сервер за ним, плату внутри корпуса и то, что в итоге движется.",
+                "studio.p2":"Рысь на нашем знаке не случайно. Она ждёт, смотрит и двигается только тогда, когда это правильный ответ. Работа, собранная так же, реже требует переделок.",
+                "stat.v.people":"4","stat.people":"специалиста в команде",
+                "stat.v.born":"2 ноя 2026","stat.born":"день, когда команда собралась",
+                "stat.v.reply":"24ч","stat.reply":"обычное время ответа",
+                "stat.v.place":"Нукус","stat.place":"Каракалпакстан, Узбекистан",
+                "svc.title":"Что мы берём",
+                "svc.sub":"Софт, железо, робототехника, собственные продукты — и обучение. Если нужного нет в списке, всё равно спросите: бывало и страннее.",
+                "svc.1.t":"Софт — от фронта до бэка",
+                "svc.1.d":"Сайты и веб-платформы, мобильные, Telegram-боты, админки, API и базы. Интерфейс и всё, что за ним, пишет одна команда — между ними ничего не теряется.",
+                "svc.2.t":"Железо и электроника",
+                "svc.2.d":"Платы, датчики, контроллеры, корпуса. От схемы на бумаге до рабочего устройства на столе: сначала прототип, потом производство.",
+                "svc.3.t":"Робототехника и инженерия",
+                "svc.3.d":"Роботы, автоматические стенды, макеты умного дома и производства. Механика, электроника и код к ним — всё теми же четырьмя людьми.",
+                "svc.4.t":"Собственные продукты",
+                "svc.4.d":"То, что мы придумываем, собираем и производим сами, а потом продаём или лицензируем: устройства, платформы, AI-ассистенты. Спросите, что готово сейчас, или закажите свою версию.",
+                "svc.5.t":"Любой другой заказ и обучение",
+                "svc.5.d":"Работа, которая не попадает ни в одну категорию, плюс курсы и наставничество в Нукусе — программирование, электроника и робототехника на реальных проектах.",
+                "work.title":"Работы","work.sub":"Опубликованные проекты, прямо из нашего API. Откройте любой, чтобы посмотреть экраны.","work.more":"Показать ещё",
+                "team.title":"Нас четверо",
+                "team.sub":"Фото, контакты и пара строк о работе — каждый обновляет свою карточку сам через админку.",
+                "ct.title":"Напишите нам","ct.sub":"Расскажите, что нужно сделать — код, устройство или и то и другое. Каждое сообщение читает живой человек.",
+                "ct.first":"Ваше имя","ct.last":"Фамилия (необязательно)","ct.text":"Что нужно сделать?","ct.send":"Отправить",
+                "ct.note":"Только имя и сообщение. Лишнего не спрашиваем.","ct.where":"Где мы",
+                "sub.title":"Остаться на связи","sub.sub":"Короткое письмо, когда выпустим что-то стоящее. Не чаще.","sub.cta":"Подписаться",
+                "ftr.rights":"Все права защищены","ftr.made":"Сделано в Нукусе, Каракалпакстан",
+                "work.empty.t":"Пока ничего не опубликовано","work.empty.d":"Проекты появятся здесь, как только мы их выложим. А пока просто напишите нам.",
+                "work.fail.t":"Работы не загрузились","work.fail.d":"Обновите страницу или напишите нам — мы ответим и без этого раздела.",
+                "work.retry":"Попробовать снова","work.open":"Открыть проект","work.view":"Подробнее","work.shots":"экранов","work.similar":"Обсудить похожее",
+                "ok.msg":"Сообщение отправлено. Ответим в течение дня.","ok.sub":"Готово. Вы в списке.",
+                "err.generic":"Не получилось. Попробуйте ещё раз.","err.network":"Нет связи с сервером. Проверьте интернет и повторите.",
+                "err.timeout":"Сервер не ответил вовремя. Повторите попытку.","err.rate":"Слишком много запросов. Подождите минуту и повторите.",
+                "err.server":"На сервере сбой. Попробуйте позже.","err.auth":"Доступ запрещён. Войдите снова.",
+                "v.name":"Введите имя.","v.text":"Опишите задачу — хотя бы в двух предложениях.","v.email":"Введите корректный e-mail.","sub.dupe":"Этот адрес уже в списке.",
+                "role.captain":"Капитан команды","role.dev":"Разработчик","role.swe":"Инженер-программист","role.hwe":"Инженер по железу","role.robo":"Специалист по робототехнике",
+                "team.didar.name":"Сарсенбаева Дидар","team.shaxrux.name":"Пиримбетов Шахрух","team.periyzat.name":"Курбанбаева Перийзат","team.diar.name":"Юлдашев Диар",
+                "team.slot.email":"E-mail пока не добавлен","team.slot.bio":"Описание пока не добавлено","team.site":"Личный сайт"
+            },
+            uz: {
+                "nav.studio":"Biz haqimizda","nav.services":"Xizmatlar","nav.work":"Ishlar","nav.team":"Jamoa","nav.contact":"Aloqa",
+                "hero.claim":"Kod, sxema va ular orasidagi hamma narsa.",
+                "hero.lede":"Nukusdagi to‘rt kishilik jamoa: dasturiy ta’minot, apparat va robototexnika, shuningdek o‘z mahsulotlarimiz. Buyurtmangiz hech bir toifaga tushmasa ham — baribir olib keling.",
+                "hero.cta":"Ishlarni ko‘rish","hero.cta2":"Loyihani boshlash","hero.scroll":"pastga",
+                "studio.title":"Jamoa",
+                "studio.p1":"DYLNX 2026-yil 2-noyabrda Nukus, Qoraqalpog‘istonda tashkil topdi. To‘rt mutaxassis: dasturchilar, dasturiy va apparat injenerlari, robototexnika. Biz loyihani boshidan oxirigacha olib boramiz — siz bosadigan ekran, uning ortidagi server, korpus ichidagi plata va harakatlanadigan qism.",
+                "studio.p2":"Belgimizdagi silovsin bejiz emas. U kutadi, kuzatadi va faqat harakat to‘g‘ri javob bo‘lgandagina qimirlaydi. Shunday qilingan ish kamroq qayta yoziladi.",
+                "stat.v.people":"4","stat.people":"jamoadagi mutaxassis",
+                "stat.v.born":"2-noy 2026","stat.born":"jamoa yig‘ilgan kun",
+                "stat.v.reply":"24 soat","stat.reply":"odatdagi javob vaqti",
+                "stat.v.place":"Nukus","stat.place":"Qoraqalpog‘iston, O‘zbekiston",
+                "svc.title":"Nimalarni bajaramiz",
+                "svc.sub":"Dasturiy ta’minot, apparat, robototexnika, o‘z mahsulotlarimiz — va o‘qitish. Kerakli narsa ro‘yxatda bo‘lmasa ham so‘rang: bundan g‘aroyibroq buyurtmalar ham bo‘lgan.",
+                "svc.1.t":"Dasturiy ta’minot: old va orqa tomon",
+                "svc.1.d":"Saytlar va veb-platformalar, mobil ilovalar, Telegram botlar, admin panellar, API va ma’lumotlar bazalari. Interfeysni ham, uning ortidagini ham bitta jamoa yozadi — orada hech narsa yo‘qolmaydi.",
+                "svc.2.t":"Apparat va elektronika",
+                "svc.2.d":"Platalar, datchiklar, kontrollerlar va korpuslar. Qog‘ozdagi sxemadan stol ustidagi ishlaydigan qurilmagacha: avval prototip, keyin ishlab chiqarish.",
+                "svc.3.t":"Robototexnika va injeneriya",
+                "svc.3.d":"Robotlar, avtomatlashtirilgan stendlar, aqlli uy va ishlab chiqarish maketlari. Mexanika, elektronika va ularni boshqaradigan kod — hammasi shu to‘rt kishidan.",
+                "svc.4.t":"O‘z mahsulotlarimiz",
+                "svc.4.d":"O‘zimiz o‘ylab topadigan, yig‘adigan va ishlab chiqaradigan narsalar: qurilmalar, platformalar, AI yordamchilar. Hozir nima tayyorligini so‘rang yoki o‘z variantingizga buyurtma bering.",
+                "svc.5.t":"Boshqa har qanday buyurtma va o‘qitish",
+                "svc.5.d":"Hech bir toifaga tushmaydigan ishlar, shuningdek Nukusda kurslar va murabbiylik — dasturlash, elektronika va robototexnika real loyihalarda.",
+                "work.title":"Ishlar","work.sub":"Chop etilgan loyihalar — to‘g‘ridan-to‘g‘ri bizning API’dan. Ekranlarni ko‘rish uchun istalganini oching.","work.more":"Yana ko‘rsatish",
+                "team.title":"Biz to‘rttamiz",
+                "team.sub":"Surat, aloqa va ish haqida bir necha satr — har kim o‘z kartasini admin panel orqali yangilab turadi.",
+                "ct.title":"Bizga yozing","ct.sub":"Nima kerakligini ayting — kod, qurilma yoki ikkalasi. Har bir xabarni tirik odam o‘qiydi.",
+                "ct.first":"Ismingiz","ct.last":"Familiya (ixtiyoriy)","ct.text":"Nima kerak?","ct.send":"Yuborish",
+                "ct.note":"Faqat ism va xabar. Ortiqchasini so‘ramaymiz.","ct.where":"Qayerdamiz",
+                "sub.title":"Aloqada qoling","sub.sub":"Arzigulik narsa chiqarsak, qisqa xat yuboramiz. Undan ko‘p emas.","sub.cta":"Obuna bo‘lish",
+                "ftr.rights":"Barcha huquqlar himoyalangan","ftr.made":"Nukus, Qoraqalpog‘istonda qilingan",
+                "work.empty.t":"Hali hech narsa chop etilmagan","work.empty.d":"Loyihalarni chop etishimiz bilan shu yerda paydo bo‘ladi. Hozircha bizga yozing.",
+                "work.fail.t":"Ishlar yuklanmadi","work.fail.d":"Sahifani yangilang yoki bizga yozing — bu bo‘limsiz ham javob beramiz.",
+                "work.retry":"Qayta urinish","work.open":"Loyihani ochish","work.view":"Batafsil","work.shots":"ekran","work.similar":"Shunga o‘xshashni muhokama qilish",
+                "ok.msg":"Xabar yuborildi. Bir kun ichida javob beramiz.","ok.sub":"Tayyor. Siz ro‘yxatdasiz.",
+                "err.generic":"Bo‘lmadi. Yana urinib ko‘ring.","err.network":"Server bilan aloqa yo‘q. Internetni tekshirib, qayta urining.",
+                "err.timeout":"Server o‘z vaqtida javob bermadi. Qayta urining.","err.rate":"Juda ko‘p so‘rov. Bir daqiqa kutib, qayta urining.",
+                "err.server":"Serverda xatolik. Keyinroq urinib ko‘ring.","err.auth":"Ruxsat yo‘q. Qaytadan kiring.",
+                "v.name":"Ismingizni kiriting.","v.text":"Vazifani tasvirlang — hech bo‘lmasa ikki jumla.","v.email":"To‘g‘ri e-pochta kiriting.","sub.dupe":"Bu manzil allaqachon ro‘yxatda.",
+                "role.captain":"Jamoa kapitani","role.dev":"Dasturchi","role.swe":"Dasturiy injener","role.hwe":"Apparat injeneri","role.robo":"Robototexnika mutaxassisi",
+                "team.slot.email":"E-pochta hali qo‘shilmagan","team.slot.bio":"Tavsif hali yo‘q","team.site":"Shaxsiy sayt"
+            },
+            kaa: {
+                "nav.studio":"Biz haqqımızda","nav.services":"Xızmetler","nav.work":"Jumıslar","nav.team":"Komanda","nav.contact":"Baylanıs",
+                "hero.claim":"Kod, sxema hám olardıń arasındaǵı barlıq nárse.",
+                "hero.lede":"Nókistegi tórt adamnan ibarat komanda: baǵdarlamalıq támiynat, texnika hám robototexnika, sonday-aq óz ónimlerimiz. Buyırtpańız hesh bir kategoriyaǵa sıymasa da — báribir alıp keliń.",
+                "hero.cta":"Jumıslardı kóriw","hero.cta2":"Joybardı baslaw","hero.scroll":"tómen",
+                "studio.title":"Komanda",
+                "studio.p1":"DYLNX 2026-jıl 2-noyabrde Nókis, Qaraqalpaqstanda dúzildi. Tórt qánige: dásturshiler, baǵdarlama hám texnika injenerleri, robototexnika. Biz joybardı basınan aqırına shekem alıp baramız — siz basatuǵın ekran, onıń artındaǵı server, korpus ishindegi plata hám qozǵalatuǵın bólim.",
+                "studio.p2":"Belgimizdegi silawsın biykarǵa emes. Ol kútedi, baqlaydı hám tek qozǵalıw durıs juwap bolǵanda ǵana háreket etedi. Sonday islengen jumıs az qayta islenedi.",
+                "stat.v.people":"4","stat.people":"komandadaǵı qánige",
+                "stat.v.born":"2-noy 2026","stat.born":"komanda dúzilgen kún",
+                "stat.v.reply":"24 saat","stat.reply":"ádettegi juwap waqtı",
+                "stat.v.place":"Nókis","stat.place":"Qaraqalpaqstan, Ózbekstan",
+                "svc.title":"Biz nelerdi islaymiz",
+                "svc.sub":"Baǵdarlamalıq támiynat, texnika, robototexnika, óz ónimlerimiz — hám oqıtıw. Kerekli nárse dizimde bolmasa da sorań: bunnan da ózgeshe buyırtpalar bolǵan.",
+                "svc.1.t":"Baǵdarlama: aldıńǵı hám artqı bólim",
+                "svc.1.d":"Saytlar hám veb-platformalar, mobil qosımshalar, Telegram botlar, admin panelleri, API hám maǵlıwmatlar bazaları. Interfeysti de, onıń artındaǵını da bir komanda jazadı — arasında hesh nárse joǵalmaydı.",
+                "svc.2.t":"Texnika hám elektronika",
+                "svc.2.d":"Platalar, datchikler, kontrollerler hám korpuslar. Qaǵazdaǵı sxemadan stol üstindegi islep turǵan qurılmaǵa shekem: aldın prototip, keyin óndiris.",
+                "svc.3.t":"Robototexnika hám injeneriya",
+                "svc.3.d":"Robotlar, avtomatlastırılǵan stendler, aqıllı úy hám óndiris maketleri. Mexanika, elektronika hám olardı basqaratuǵın kod — bári usı tórt adamnan.",
+                "svc.4.t":"Óz ónimlerimiz",
+                "svc.4.d":"Ózimiz oylap tabatuǵın, jıynaytuǵın hám islep shıǵaratuǵın nárseler: qurılmalar, platformalar, AI járdemshiler. Házir ne tayar ekenin sorań yamasa óz variantıńızǵa buyırtpa beriń.",
+                "svc.5.t":"Basqa qálegen buyırtpa hám oqıtıw",
+                "svc.5.d":"Hesh bir kategoriyaǵa sıymaytuǵın jumıslar, sonday-aq Nókiste kurslar hám ustazlıq — baǵdarlamalaw, elektronika hám robototexnika haqıyqıy joybarlarda.",
+                "work.title":"Jumıslar","work.sub":"Járiyalanǵan joybarlar — tikkeley bizdiń API’dan. Ekranlardı kóriw ushın qálegenin ashıń.","work.more":"Jáne kórsetiw",
+                "team.title":"Biz tórtewmiz",
+                "team.sub":"Súwret, baylanıs hám jumıs haqqında bir neshe qatar — hár kim óz kartasın admin panel arqalı jańalap turadı.",
+                "ct.title":"Bizge jazıń","ct.sub":"Ne kerek ekenin aytıń — kod, qurılma yamasa ekewi de. Hár bir xabardı tiri adam oqıydı.",
+                "ct.first":"Atıńız","ct.last":"Familiya (mindetli emes)","ct.text":"Ne kerek?","ct.send":"Jiberiw",
+                "ct.note":"Tek at hám xabar. Artıqshasın soramaymız.","ct.where":"Qayerdemiz",
+                "sub.title":"Baylanısta qalıń","sub.sub":"Arzıytuǵın nárse shıqsa, qısqa xat jiberemiz. Onnan kóp emes.","sub.cta":"Jazılıw",
+                "ftr.rights":"Barlıq huqıqlar qorǵalǵan","ftr.made":"Nókis, Qaraqalpaqstanda islengen",
+                "work.empty.t":"Áli hesh nárse járiyalanbaǵan","work.empty.d":"Joybarlardı járiyalaǵanımızda usı jerde kórinedi. Házirshe bizge jazıń.",
+                "work.fail.t":"Jumıslar júklenbedi","work.fail.d":"Betti jańalań yamasa bizge jazıń — bul bólimsiz de juwap beremiz.",
+                "work.retry":"Qayta urınıw","work.open":"Joybardı ashıw","work.view":"Tolıǵıraq","work.shots":"ekran","work.similar":"Usınday nárseni dodalaw",
+                "ok.msg":"Xabar jiberildi. Bir kún ishinde juwap beremiz.","ok.sub":"Tayar. Siz dizimdesiz.",
+                "err.generic":"Bolmadı. Qayta urınıp kóriń.","err.network":"Server menen baylanıs joq. Internetti tekserip, qayta urınıń.",
+                "err.timeout":"Server waqtında juwap bermedi. Qayta urınıń.","err.rate":"Júdá kóp soraw. Bir minut kútip, qayta urınıń.",
+                "err.server":"Serverde qátelik. Keyinirek urınıp kóriń.","err.auth":"Ruqsat joq. Qaytadan kiriń.",
+                "v.name":"Atıńızdı jazıń.","v.text":"Másele nede ekenin jazıń — kemi eki sóylem.","v.email":"Durıs e-pochta jazıń.","sub.dupe":"Bul mánzil dizimde bar.",
+                "role.captain":"Komanda kapitanı","role.dev":"Dásturshi","role.swe":"Baǵdarlama injeneri","role.hwe":"Texnika injeneri","role.robo":"Robototexnika qánigesi",
+                "team.slot.email":"E-pochta ele qosılmaǵan","team.slot.bio":"Táriyp ele joq","team.site":"Jeke sayt"
+            }
         };
+
+        /* strings that never appear in the markup, so English needs its own copy */
         const EN = {
             "work.empty.t":"Nothing published yet","work.empty.d":"Projects will show up here as soon as we publish them. In the meantime, just write to us.",
             "work.fail.t":"Work didn't load","work.fail.d":"Reload the page, or write to us — we answer fine without this section.",
-            "work.retry":"Try again","work.open":"Open project","work.view":"View details","work.shots":"screens",
-            "work.similar":"Ask about something like this",
+            "work.retry":"Try again","work.open":"Open project","work.view":"View details","work.shots":"screens","work.similar":"Ask about something like this",
             "ok.msg":"Message sent. We answer within a day.","ok.sub":"Done. You're on the list.",
-            "err.generic":"That didn't go through. Try again.",
-            "err.network":"Can't reach the server. Check your connection and retry.",
-            "err.timeout":"The server took too long. Try again.",
-            "err.rate":"Too many requests. Wait a minute and try again.",
-            "err.server":"The server failed. Try again later.",
-            "err.auth":"Access denied. Sign in again.",
-            "v.name":"Add your name.","v.text":"Describe the task — two sentences is enough.","v.email":"Enter a valid email address.",
-            "sub.dupe":"That address is already on the list."
+            "err.generic":"That didn't go through. Try again.","err.network":"Can't reach the server. Check your connection and retry.",
+            "err.timeout":"The server took too long. Try again.","err.rate":"Too many requests. Wait a minute and try again.",
+            "err.server":"The server failed. Try again later.","err.auth":"Access denied. Sign in again.",
+            "v.name":"Add your name.","v.text":"Describe the task — two sentences is enough.","v.email":"Enter a valid email address.","sub.dupe":"That address is already on the list.",
+            "role.captain":"Team captain","role.dev":"Developer","role.swe":"Software Engineer","role.hwe":"Hardware Engineer","role.robo":"Robotics Specialist",
+            "team.didar.name":"Didar Sarsenbaeva","team.shaxrux.name":"Shaxrux Pirimbetov","team.periyzat.name":"Periyzat Qurbanbaeva","team.diar.name":"Diar Yuldashev",
+            "team.slot.email":"Email not added yet","team.slot.bio":"No description yet","team.site":"Personal site"
         };
 
-        /* English baseline, captured from the markup before anything is swapped. */
+        /* English baseline, captured from the markup before anything is swapped */
         const BASE = {};
         $$("[data-i18n]").forEach(function(el){ BASE[el.getAttribute("data-i18n")] = el.textContent; });
 
         function T(key){
-            if (LANG === "ru" && RU[key]) return RU[key];
+            const d = I18N[LANG];
+            if (d && d[key]) return d[key];
             if (EN[key]) return EN[key];
             return BASE[key] || key;
         }
+        function dateLocale(){
+            if (LANG === "ru") return "ru-RU";
+            if (LANG === "uz") return "uz-Latn-UZ";
+            return "en-GB";
+        }
 
         function applyLang(lang){
-            LANG = (lang === "ru") ? "ru" : "en";
+            LANG = I18N[lang] ? lang : "en";
             document.documentElement.setAttribute("lang", LANG);
             document.documentElement.setAttribute("data-lang", LANG);
+            const d = I18N[LANG];
             $$("[data-i18n]").forEach(function(el){
                 const k = el.getAttribute("data-i18n");
-                const v = (LANG === "ru" && RU[k]) ? RU[k] : BASE[k];
+                const v = (d && d[k]) ? d[k] : BASE[k];
                 if (v) el.textContent = v;
             });
             $$("[data-setlang]").forEach(function(b){
@@ -1264,6 +1416,7 @@
             });
             try { localStorage.setItem("dx_lang", LANG); } catch(e){}
             if (projects.length) paintWork();
+            paintTeam();
         }
 
         $$("[data-setlang]").forEach(function(b){
@@ -1559,6 +1712,115 @@
             loadWork(false).then(function(){ moreBtn.disabled = false; });
         });
 
+        /* ═══════════ 6b. team ═══════════ */
+        const teamGrid = $("#teamGrid");
+
+        /* shown until the API serves the team; roles are the ones the team gave us */
+        const TEAM_BASE = [
+            { id:"didar",    roles:["captain","dev"] },
+            { id:"shaxrux",  roles:["dev","swe","hwe"] },
+            { id:"periyzat", roles:["hwe","robo"] },
+            { id:"diar",     roles:["hwe","robo"] }
+        ];
+        let TEAM = [];
+
+        function pickStr(o, names){
+            for (let i = 0; i < names.length; i++){
+                const v = o[names[i]];
+                if (typeof v === "string" && v.trim()) return v.trim();
+            }
+            return "";
+        }
+        function fieldKey(o, names){
+            for (let i = 0; i < names.length; i++){
+                if (Object.prototype.hasOwnProperty.call(o, names[i])) return names[i];
+            }
+            return null;
+        }
+        const F_POS = ["position","title","stack"];
+        const F_BIO = ["bio","description","about"];
+        const F_SITE = ["website","site","url"];
+
+        function fromApi(u){
+            return {
+                name: [u.first_name, u.last_name].filter(Boolean).join(" ") || u.username || "—",
+                roles: null,
+                roleText: pickStr(u, F_POS),
+                photo: safeImg(u.avatar),
+                email: pickStr(u, ["email"]),
+                bio: pickStr(u, F_BIO),
+                site: safeHref(pickStr(u, F_SITE))
+            };
+        }
+        function fromBase(m){
+            return { name:T("team." + m.id + ".name"), roles:m.roles, roleText:"", photo:null, email:"", bio:"", site:"" };
+        }
+        function initials(name){
+            return String(name).split(/\s+/).filter(Boolean).slice(0, 2)
+                .map(function(w){ return w.charAt(0).toUpperCase(); }).join("");
+        }
+
+        function teamCard(p){
+            const ph = el("div",{class:"ph"});
+            if (p.photo){
+                const im = el("img",{src:p.photo,alt:"",loading:"lazy",decoding:"async"});
+                im.addEventListener("error", function(){
+                    im.remove();
+                    ph.appendChild(el("span",{text:initials(p.name)}));
+                });
+                ph.appendChild(im);
+            } else {
+                ph.appendChild(el("span",{text:initials(p.name)}));
+            }
+
+            const roles = el("div",{class:"roles"});
+            if (p.roles){
+                p.roles.forEach(function(r){ roles.appendChild(el("span",{class: r === "captain" ? "cap" : null, text:T("role." + r)})); });
+            } else if (p.roleText){
+                p.roleText.split(/[,·;]+/).forEach(function(r){
+                    r = r.trim();
+                    if (r) roles.appendChild(el("span",{text:r}));
+                });
+            }
+
+            const links = el("div",{class:"links"});
+            if (p.email) links.appendChild(el("a",{href:"mailto:" + p.email, text:p.email}));
+            else links.appendChild(el("div",{class:"slot",text:T("team.slot.email")}));
+            if (p.site) links.appendChild(el("a",{href:p.site, target:"_blank", rel:"noopener noreferrer", text:T("team.site")}));
+
+            return el("article",{class:"tm rv in"},[
+                ph,
+                el("h3",{class:"h-card",text:p.name}),
+                roles.childNodes.length ? roles : null,
+                p.bio ? el("p",{class:"bio",text:p.bio}) : el("div",{class:"slot",text:T("team.slot.bio")}),
+                links
+            ]);
+        }
+
+        function paintTeam(){
+            if (!teamGrid) return;
+            teamGrid.textContent = "";
+            const rows = TEAM.length ? TEAM : TEAM_BASE.map(fromBase);
+            rows.forEach(function(p){ teamGrid.appendChild(teamCard(p)); });
+        }
+
+        /* public endpoint first, admin list as a fallback, built-in cards last */
+        async function loadTeam(){
+            let rows = null;
+            try {
+                rows = rowsOf(await call("/api/user/team/"));
+            } catch(e){
+                if (token()){
+                    try { rows = rowsOf(await authCall("/api/user/")); } catch(e2){}
+                }
+            }
+            if (rows && rows.length){
+                const emp = rows.filter(function(u){ return String(u.role || "").toUpperCase() === "EMPLOYEE"; });
+                TEAM = (emp.length ? emp : rows).map(fromApi);
+            }
+            paintTeam();
+        }
+
         /* ═══════════ 7. project modal ═══════════ */
         const pm = $("#pModal");
         let lastFocus = null;
@@ -1573,7 +1835,7 @@
                 const dt = new Date(p.created_at);
                 if (!isNaN(dt.getTime())){
                     const s = document.createElement("span");
-                    s.textContent = dt.toLocaleDateString(LANG === "ru" ? "ru-RU" : "en-GB", { year: "numeric", month: "long" });
+                    s.textContent = dt.toLocaleDateString(dateLocale(), { year: "numeric", month: "long" });
                     meta.appendChild(s);
                 }
             }
@@ -1713,7 +1975,7 @@
         /* ═══════════ 10. admin ═══════════ */
         const adRoot = $("#admin");
         const adSheet = $("#adSheet");
-        const AD = { view:"overview", me:null, projects:[], pNext:null, messages:[], subs:[], users:[], q:"" };
+        const AD = { view:"overview", me:null, projects:[], pNext:null, messages:[], subs:[], users:[], team:[], teamAll:false, q:"" };
         let adIdle = null;
 
         /* tiny builder — textContent only, so API data can never become markup */
@@ -1736,12 +1998,12 @@
         function when(v){
             if (!v) return "";
             const d = new Date(v);
-            return isNaN(d.getTime()) ? "" : d.toLocaleDateString(LANG === "ru" ? "ru-RU" : "en-GB", { day:"2-digit", month:"short", year:"numeric" });
+            return isNaN(d.getTime()) ? "" : d.toLocaleDateString(dateLocale(), { day:"2-digit", month:"short", year:"numeric" });
         }
         function whenFull(v){
             if (!v) return "";
             const d = new Date(v);
-            return isNaN(d.getTime()) ? "" : d.toLocaleString(LANG === "ru" ? "ru-RU" : "en-GB");
+            return isNaN(d.getTime()) ? "" : d.toLocaleString(dateLocale());
         }
 
         /* walk DRF pages up to a cap so counts and exports are complete */
@@ -1818,7 +2080,7 @@
         /* ── navigation ── */
         const AD_VIEWS = {
             overview:["Overview", vOverview], projects:["Projects", vProjects], messages:["Messages", vMessages],
-            subs:["Subscribers", vSubs], users:["Users", vUsers], account:["Account", vAccount]
+            subs:["Subscribers", vSubs], users:["Users", vUsers], team:["Team cards", vTeam], account:["Account", vAccount]
         };
         function adGo(view){
             AD.view = AD_VIEWS[view] ? view : "overview";
@@ -2396,6 +2658,137 @@
             sheetOpen(edit ? ("Edit " + (u.username || "user")) : "New user", nodes);
         }
 
+        /* ══════ team (admin) ══════ */
+        async function vTeam(){
+            const tools = $("#adTools");
+            tools.appendChild(el("button",{class:"ab",type:"button",text:"Refresh",click:adRender}));
+            adBusy();
+            try {
+                const r = await adAll("/api/user/", 5);
+                const emp = r.rows.filter(function(u){ return String(u.role || "").toUpperCase() === "EMPLOYEE"; });
+                AD.team = emp.length ? emp : r.rows;
+                AD.teamAll = !emp.length;
+                paintTeamAdmin();
+            } catch(err){
+                adMsg("Couldn't load the team", reason(err), "Try again", adRender);
+            }
+        }
+
+        function paintTeamAdmin(){
+            const b = adBody();
+            b.textContent = "";
+            const sample = AD.team[0] || {};
+            const missing = [];
+            if (!fieldKey(sample, ["position","title"])) missing.push("position (role line; stack is capped at 20 chars)");
+            if (!fieldKey(sample, F_BIO)) missing.push("bio (the description under the name)");
+            if (!fieldKey(sample, F_SITE)) missing.push("website (personal site link)");
+
+            b.appendChild(el("div",{class:"ad-note",text:
+                    "Cards on the site come from users with role EMPLOYEE. For the public page to show them to visitors, add GET /api/user/team/ with AllowAny — without it only a signed-in admin sees live data and everyone else sees the built-in cards." +
+                    (missing.length ? " Fields the User model still needs: " + missing.join(", ") + "." : "") +
+                    " Editing also needs UpdateUserSerializer to list those fields (and first_name instead of fist_name)."}));
+
+            if (AD.teamAll){
+                b.appendChild(el("div",{class:"ad-note",text:"No user has role EMPLOYEE yet, so every account is listed. Set the four team members to EMPLOYEE and the site will pick exactly them."}));
+            }
+
+            if (!AD.team.length){
+                b.appendChild(el("div",{class:"ad-empty"},[
+                    el("h4",{text:"No one to show"}),
+                    el("p",{text:"Create the team members under Users, give them role EMPLOYEE, then come back."}),
+                    el("button",{class:"ab pri",type:"button",text:"Go to Users",click:function(){ adGo("users"); }})
+                ]));
+                return;
+            }
+
+            const list = el("div",{class:"ad-list"});
+            AD.team.forEach(function(u){
+                const av = safeImg(u.avatar);
+                let thumb;
+                if (av){
+                    thumb = el("img",{class:"th",src:av,alt:"",loading:"lazy",decoding:"async"});
+                    thumb.addEventListener("error", function(){ thumb.replaceWith(el("div",{class:"th"})); });
+                } else thumb = el("div",{class:"th"});
+
+                const bits = [pickStr(u, F_POS), pickStr(u, ["email"]), pickStr(u, F_SITE)].filter(Boolean);
+                list.appendChild(el("div",{class:"ad-item"},[
+                    thumb,
+                    el("div",{class:"grow"},[
+                        el("h4",{},[
+                            el("span",{text:[u.first_name, u.last_name].filter(Boolean).join(" ") || u.username || "—"}),
+                            av ? null : el("span",{class:"tag off",text:"no photo"}),
+                            pickStr(u, F_BIO) ? null : el("span",{class:"tag off",text:"no description"})
+                        ]),
+                        el("p",{text:bits.join(" · ") || "—"})
+                    ]),
+                    el("div",{class:"ad-acts"},[
+                        el("button",{class:"ab",type:"button",text:"Edit card",click:function(){ teamCardForm(u); }})
+                    ])
+                ]));
+            });
+            b.appendChild(list);
+        }
+
+        function teamCardForm(u){
+            const posKey = fieldKey(u, F_POS);
+            const bioKey = fieldKey(u, F_BIO);
+            const siteKey = fieldKey(u, F_SITE);
+            const avField = fld("tf_avatar","Photo (leave empty to keep)","file", null, {});
+            livePreview(avField, "tf_avatar");
+            const err = el("p",{class:"err",style:"color:#e8854f;font-size:.84rem;margin:14px 0 0"});
+            const save = el("button",{class:"btn btn-sm",type:"button",text:"Save card"});
+
+            const nodes = [
+                fld("tf_first","First name","text", u.first_name, { maxlength:150 }),
+                fld("tf_last","Last name","text", u.last_name, { maxlength:150 }),
+                fld("tf_pos","Role line","text", pickStr(u, F_POS), {
+                    maxlength: posKey === "stack" ? 20 : 120,
+                    placeholder:"Developer, Hardware Engineer",
+                    hint: posKey ? (posKey === "stack" ? "Saved into stack — max 20 characters. Add a position field for longer role lines." : "Saved into " + posKey + ".") : "No field for this on the User model yet."
+                }),
+                fld("tf_email","Email","email", u.email, { maxlength:254, hint:"Shown on the card as a mailto link." }),
+                fld("tf_bio","Description","textarea", pickStr(u, F_BIO), {
+                    maxlength:600,
+                    hint: bioKey ? ("Saved into " + bioKey + ".") : "No bio field on the User model yet — add one and this starts saving."
+                }),
+                fld("tf_site","Personal site","url", pickStr(u, F_SITE), {
+                    placeholder:"https://",
+                    hint: siteKey ? ("Saved into " + siteKey + ".") : "No website field on the User model yet — add one and this starts saving."
+                }),
+                avField,
+                el("div",{class:"sendrow"},[save]),
+                err
+            ];
+
+            save.addEventListener("click", async function(){
+                err.textContent = "";
+                const fd = new FormData();
+                fd.append("first_name", $("#tf_first").value.trim());
+                fd.append("last_name", $("#tf_last").value.trim());
+                if (posKey) fd.append(posKey, $("#tf_pos").value.trim());
+                fd.append("email", $("#tf_email").value.trim());
+                if (bioKey) fd.append(bioKey, $("#tf_bio").value.trim());
+                if (siteKey) fd.append(siteKey, $("#tf_site").value.trim());
+                const av = $("#tf_avatar").files[0];
+                if (av) fd.append("avatar", av);
+
+                save.disabled = true;
+                try {
+                    await authCall("/api/user/" + encodeURIComponent(u.id) + "/", { method:"PATCH", body:fd, timeout:90000 });
+                    sheetClose();
+                    toast("Card saved.");
+                    loadTeam();
+                    adGo("team");
+                } catch(e2){
+                    err.textContent = (e2 && e2.status >= 500)
+                        ? "Backend error: UpdateUserSerializer lists \"fist_name\" — it should be \"first_name\", and it must also list email, bio and website for those to save."
+                        : reason(e2);
+                } finally { save.disabled = false; }
+            });
+
+            sheetOpen("Team card · " + (u.username || ""), nodes);
+        }
+
         /* ══════ account ══════ */
         async function vAccount(){
             adBusy();
@@ -2481,11 +2874,15 @@
         (function(){
             let saved = null;
             try { saved = localStorage.getItem("dx_lang"); } catch(e){}
-            if (!saved) saved = (navigator.language || "en").toLowerCase().indexOf("ru") === 0 ? "ru" : "en";
-            if (saved === "ru") applyLang("ru");
+            if (!saved){
+                const nav = (navigator.language || "en").toLowerCase();
+                saved = nav.indexOf("ru") === 0 ? "ru" : (nav.indexOf("uz") === 0 ? "uz" : (nav.indexOf("kaa") === 0 || nav.indexOf("kk") === 0 ? "kaa" : "en"));
+            }
+            if (saved !== "en") applyLang(saved);
         })();
 
         loadWork(true);
+        loadTeam();
 
     })();
 </script>
