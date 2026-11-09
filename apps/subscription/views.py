@@ -7,6 +7,6 @@ class SubscriptionListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = SubscriptionSerializer
 
     def get_permissions(self):
-        if self.request.method == "GET":
+        if self.request.method == "POST":
             return [permissions.AllowAny()]
         return [permissions.IsAdminUser()]
