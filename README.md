@@ -6,7 +6,7 @@
 
 Official website and API of the DYLNX engineering team — Nukus, Karakalpakstan.
 
-![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.12%2B-3776AB?logo=python&logoColor=white)
 ![Django REST Framework](https://img.shields.io/badge/Django-REST%20Framework-092E20?logo=django&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Neon-4169E1?logo=postgresql&logoColor=white)
 ![Cloudflare R2](https://img.shields.io/badge/Cloudflare-R2-F38020?logo=cloudflare&logoColor=white)
@@ -82,7 +82,7 @@ The backend is deployed in production; the page is rendered by Django at `/` and
 
 ### Prerequisites
 
-- Python 3.10+
+- Python 3.12+ (required by current Django)
 - A PostgreSQL database (any URL supported by `dj-database-url`)
 - A Cloudflare R2 bucket with a public URL — Django's default file storage is R2, so these variables are required even for local development
 
