@@ -18,4 +18,4 @@ class ResponseUserSerializer(serializers.ModelSerializer):
 class UpdateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["avatar", "stack", "fist_name", "last_name"]
+        fields = ["avatar", "stack", "first_name", "last_name"]
