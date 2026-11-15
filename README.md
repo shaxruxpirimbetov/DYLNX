@@ -165,7 +165,7 @@ Authenticate with `Authorization: Bearer <access_token>`. List endpoints are pag
 | Method | Endpoint | Access | Description |
 |---|---|---|---|
 | `POST` | `/api/message/` | public | Send a contact message (`first_name`, `last_name`, `text`) |
-| `GET` | `/api/message/` | see *Known limitations* | List messages |
+| `GET` | `/api/message/` | admin | List messages |
 
 ### Subscriptions — `/api/subscription/`
 
@@ -186,10 +186,8 @@ Authenticate with `Authorization: Bearer <access_token>`. List endpoints are pag
 
 ## Known limitations
 
-These are documented here so they are fixed before wider use:
+Current gaps that are known and documented:
 
-- `GET /api/message/` has no access restriction, so contact-form submissions are readable by anyone. Restrict it to staff (`IsAdminUser` for `GET`, `AllowAny` for `POST`).
-- `UpdateUserSerializer` lists the field `fist_name` (typo for `first_name`), which makes `PATCH /api/user/<id>/` fail until corrected.
 - There are no detail routes for messages and subscriptions, so entries cannot be deleted through the API or the admin panel.
 - The `apps/comment` app is a scaffold and is not enabled in `INSTALLED_APPS`.
 
